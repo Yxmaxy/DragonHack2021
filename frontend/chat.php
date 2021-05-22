@@ -4,7 +4,7 @@ session_start();
 if(!isset($_SESSION['email']))
 {
     session_unset();
-    header("Location: index.php");
+    //header("Location: index.php");
 }
 ?>
 
@@ -49,10 +49,10 @@ if(!isset($_SESSION['email']))
             });
         }
 
-        socket = null
-        connected = false;
+        socket = null;
 
-        function connect() {
+        window.onload = () => {
+            console.log("Dela");
             // Create WebSocket connection.
             socket = new WebSocket('ws://localhost:81');
 
@@ -76,12 +76,6 @@ if(!isset($_SESSION['email']))
         }
 
         function requestGIFS() {
-
-            console.log("Dela");
-            if (!connected)
-            {
-                connect()
-            }
 
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
