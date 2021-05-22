@@ -47,7 +47,7 @@ if (isset($_GET['code'])) {
       session_start();
       $_SESSION['email'] = $email;
       
-      header("Location: setUsername.php");
+      header("Location: ../setUsername.php");
   }
 }
 
