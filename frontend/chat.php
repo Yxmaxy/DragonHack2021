@@ -123,7 +123,7 @@ if(!isset($_SESSION['email']))
             {
                 var user = arrayOfUsers[i];
                 const regex = /<img.*>/i;
-                var username = user.innerHTML.replace(regex, "").replaceAll(" ", "").replaceAll("\n", "");
+                var username = user.innerHTML.replace(regex, "").replaceAll("\n", "").replace(/^ */i, "").replace(/ *$/i, "");
                 console.log("MarkupOnlineUsers: " + username);
                 if (onlineUsers.includes(username))
                 {
