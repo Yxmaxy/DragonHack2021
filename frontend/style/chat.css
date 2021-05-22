@@ -78,7 +78,17 @@ main > div {
 
 /* User (on the left) */
 .user {
-    background-color: red;
+    background-color: rgb(47, 54, 54);
     padding: 5px;
     margin-bottom: 2px;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user img {
+    height: 3vh;
+    border-radius: 100%;
+    margin-right: 10px;
 }

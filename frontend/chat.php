@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style/chat.css">
 
     <script>
-        window.onload = () => {
+        /*window.onload = () => {
             const seznam = document.getElementById("usersList");
             const rit = document.getElementById("userChat");
             const ass = document.getElementById("gifList");
@@ -23,8 +23,8 @@
             }
             
             // za scrollanje do dol
-            //ass.scrollTop = ass.scrollHeight;
-        }
+            // ass.scrollTop = ass.scrollHeight;
+        }*/
     </script>
 </head>
 <body>
@@ -36,7 +36,9 @@
         <div id="users">
             <h3>Users</h3>
             <div id="usersList">
-                <div class="user">Neki uporabnik</div>
+            <?php
+            include "./database/allUsers.php";
+            ?>
             </div>  
         </div>
         <div id="chat">

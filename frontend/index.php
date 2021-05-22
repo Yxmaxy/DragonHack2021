@@ -1,3 +1,7 @@
+<?php 
+include("./database/redirect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,9 @@
 <body>
     <header>
         Gif Messenger
-        <button>Login</button>
+        <?php 
+        echo "<a target='_blank' href='".$client->createAuthUrl()."'>Google Login</a>";
+        ?>
     </header>
     <main>
         <div id="writing">
