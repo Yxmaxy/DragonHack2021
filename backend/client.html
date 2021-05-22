@@ -8,7 +8,6 @@
     <title>Document</title>
 
     <script>
-        const socket = new WebSocket('ws://localhost:80');
 
         function drawGifs(obj) {
             div = document.getElementById("slikice");
@@ -23,30 +22,28 @@
             });
         }
 
-        // Create WebSocket connection.
+        socket = null
 
-        // Connection opened
-        socket.addEventListener('open', function (event) {
-            var connect = {type: "client hello!", username: document.getElementById("username")}
-            var text = JSON.stringify(connect)
-            socket.send(text);
-        });
+        function connect() {
+            socket = new WebSocket('ws://localhost:80');
 
-        // Listen for messages
-        socket.addEventListener('message', function (event) {
-            console.log('Message from server ', event.data);
-            var obj = JSON.parse(event.data);
-            if (obj["type"] == "request return") {
-                drawGifs(obj["data"]);
-            }
-        });
+            // Create WebSocket connection.
 
-         function connect() {
-            var st_slik = document.getElementById("st_slik").value;
-            var GIFkeywords = document.getElementById("keywords").value.split(":");
-            var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
-            var text = JSON.stringify(obj)
-            socket.send(text);
+            // Connection opened
+            socket.addEventListener('open', function (event) {
+                var connect = {type: "client hello!", username: document.getElementById("username").value}
+                var text = JSON.stringify(connect)
+                socket.send(text);
+            });
+
+            // Listen for messages
+            socket.addEventListener('message', function (event) {
+                console.log('Message from server ', event.data);
+                var obj = JSON.parse(event.data);
+                if (obj["type"] == "request return") {
+                    drawGifs(obj["data"]);
+                }
+            });
         }
 
         function sendMessage() {
