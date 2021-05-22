@@ -4,7 +4,7 @@ require_once 'vendor/autoload.php';
 // init configuration
 $clientID = '235250556017-pnuqpjd5j9oucktd0h9usnq9ca75a90h.apps.googleusercontent.com';
 $clientSecret = 'C-mn-vcRdrdXLclp8gNNQ9nM';
-$redirectUri = 'http://gifmessenger.nikigre.si/redirect.php';
+$redirectUri = 'http://gifmessenger.nikigre.si/frontend/database/redirect.php';
    
 // create Client Request to access Google API
 $client = new Google_Client();
@@ -31,10 +31,15 @@ if (isset($_GET['code'])) {
   $access_token=$token['access_token'];
   $picture=$google_account_info->picture;
  
-  
-  if(UserExists($email))
+  $user=UserExists($email);
+
+  if($user !=false)
   {
-      echo "ŽE OBSTAJA";
+      session_start();
+      $_SESSION['email'] = $email;
+      $_SESSION['username'] = $user;
+
+      header("Location: ../chat.php");
   }
   else{
       InsertUser($email, $id_token, $access_token, $picture);
@@ -49,17 +54,21 @@ if (isset($_GET['code'])) {
 function UserExists($email)
 {
     include "db.php";
-        $sql = "SELECT ID FROM `Users` WHERE Email='" . mysqli_real_escape_string($conn, $email) . "'";
+    $sql = "SELECT UserName FROM `Users` WHERE Email='" . mysqli_real_escape_string($conn, $email) . "'";
     $result = $conn->query($sql);
     
     if ($result->num_rows == 1) {
-        return true;
+        while($row = $result->fetch_assoc()) {
+            $username=$row['UserName'];
+        }       
     }
     else
     {
         return false;
     }
     $conn->close();
+
+    return $username;
 }
 
 function InsertUser($email, $id_token, $access_token, $picture)
