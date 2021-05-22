@@ -97,6 +97,7 @@ if(!isset($_SESSION['email']))
         }
 
         function requestGIFS() {
+            document.getElementById("gifList").scrollTop = 0;
 
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
