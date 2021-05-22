@@ -45,14 +45,13 @@ if(!isset($_SESSION['email']))
                 var url = element[0].url
                 var x = element[0].dims[0]
                 var y = element[0].dims[1]
-                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                div.innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
             });
         }
 
         socket = null;
 
         window.onload = () => {
-            console.log("Dela");
             // Create WebSocket connection.
             socket = new WebSocket('ws://localhost:81');
 
@@ -60,7 +59,7 @@ if(!isset($_SESSION['email']))
             socket.addEventListener('open', function (event) {
                 //var connect = {type: "client hello!", username: document.getElementById("username").value}
                 //$_SESSION["username"] = "Bine";
-                var connect = {type: "client hello!", username: /*$_SESSION["username"]*/ "Bine"}
+                var connect = {type: "client hello!", username: <?= $_SESSION["username"] ?>}
                 var text = JSON.stringify(connect)
                 socket.send(text);
             });
@@ -80,6 +79,14 @@ if(!isset($_SESSION['email']))
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
+            var text = JSON.stringify(obj)
+            socket.send(text);
+        }
+
+        function whoOnline() {
+            var st_slik = 30;
+            var GIFkeywords = document.getElementById("searchQuery").value.split(",");
+            var obj = {type: "who online"};
             var text = JSON.stringify(obj)
             socket.send(text);
         }
