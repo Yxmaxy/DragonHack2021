@@ -122,9 +122,10 @@ if(!isset($_SESSION['email']))
                 const regex = /<img.*>/i;
                 var username = user.innerHTML.replace(regex, "").replaceAll(" ", "").replaceAll("\n", "");
                 console.log("MarkupOnlineUsers: " + username);
-                if (onlineUsers.contains(username))
+                if (onlineUsers.includes(username))
                 {
                     user.style.backgroundColor = "green";
+                    user.ena
                 }
                 else
                 {

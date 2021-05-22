@@ -14,6 +14,10 @@ class SimpleChat(WebSocket):
             clients[parameters["username"]] = clients[str(self)]
             clients.pop(str(self))
             self.send_message("{ \"type\": \"server hello!\" }")
+            for client_name, client_sock in clients.items():
+                clients_usernames = [x for x in clients.keys()]
+                client_sock.send_message(
+                    "{ \"type\": \"who online\", \"data\": " + json.dumps(clients_usernames) + " }")
 
         if parameters["type"] == "request":
             print("REQUEST: ")
@@ -38,9 +42,9 @@ class SimpleChat(WebSocket):
         print(self.address, 'connected')
         clients[str(self)] = self
         # Send who online to all users
-        for client_name, client_sock in clients.items():
+        """for client_name, client_sock in clients.items():
             clients_usernames = [x for x in clients.keys()]
-            client_sock.send_message("{ \"type\": \"who online\", \"data\": " + json.dumps(clients_usernames) + " }")
+            client_sock.send_message("{ \"type\": \"who online\", \"data\": " + json.dumps(clients_usernames) + " }")"""
 
     def handle_close(self):
         # Odstanimo uporabnika izmed prijavljenih
