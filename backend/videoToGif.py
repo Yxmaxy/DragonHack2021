@@ -9,7 +9,7 @@ frames = []
 for frame in ImageSequence.Iterator(im):
     # Draw the text on the frame
     d = ImageDraw.Draw(frame)
-    d.text((im.width/2,im.height-25), "Ne vem js zej...",font=ImageFont.truetype("arial.ttf", 20))
+    d.text((im.width / 4, im.height - 60), "Ne vem js zej...", font=ImageFont.truetype("arial.ttf", 50))
     del d
 
     b = io.BytesIO()
