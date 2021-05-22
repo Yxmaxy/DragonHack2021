@@ -14,13 +14,3 @@ main {
 #gifs {
     flex: 2
 }
-
-#login {
-    text-decoration: none;
-    color: whitesmoke;
-    font-size: clamp(0.5rem, 10vw, 1rem);
-    background-color: orange;
-    padding: 13px 10px 10px 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-}

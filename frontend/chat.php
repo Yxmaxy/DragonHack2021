@@ -30,7 +30,7 @@
 <body>
     <header>
         Gif Messenger
-        <button>Logout</button>
+        <a id='logInOutButton'>Log out</a>
     </header>
     <main>
         <div id="users">
