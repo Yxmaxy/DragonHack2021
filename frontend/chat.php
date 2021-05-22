@@ -49,7 +49,7 @@
                 </div>
             </div-->
             <div id="searchBar">
-                <input>
+                <input placeholder="Enter a keyword">
                 <button>🔎</button>
             </div>
         
