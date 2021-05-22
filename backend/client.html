@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:80');
+
+        function drawGifs(obj) {
+            div = document.getElementById("slikice");
+            div.innerHTML = "";
+            alert("Dela");
+            console.log(obj);
+            obj.forEach(element => {
+                var url = element[1].url
+                var x = element[1].dims[0]
+                var y = element[1].dims[1]
+                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\"img>"
+            });
+        }
+
+        // Create WebSocket connection.
+
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            var connect = {type: "client hello!", username: document.getElementById("username")}
+            var text = JSON.stringify(connect)
+            socket.send(text);
+        });
+
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server ', event.data);
+            var obj = JSON.parse(event.data);
+            if (obj["type"] == "request return") {
+                drawGifs(obj["data"]);
+            }
+        });
+
+        function sendMessage() {
+            var st_slik = document.getElementById("st_slik").value;
+            var GIFkeywords = document.getElementById("keywords").value.split(":");
+            var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
+            var text = JSON.stringify(obj)
+            socket.send(text);
+        }
+
+    </script>
+</head>
+
+<body>
+<input type="text" id="username">
+<button onclick="connect()">Connect</button>
+<button onclick="sendMessage()">Gumbek</button>
+<input type="text" id="st_slik">
+<input type="text" id="keywords">
+<br>
+<div id="slikice">
+</div>
+</body>
+
+</html>
