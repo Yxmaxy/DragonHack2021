@@ -9,7 +9,7 @@ if(isset($_POST['username']))
     if($rez==0)
     {		
 		$_SESSION['username'] = $_POST['username'];
-        header("Location: ../chat.php");
+        header("Location: chat.php");
     }
     else if($rez==1){
         echo "Že nastavljeno";
@@ -73,7 +73,7 @@ function UpdateUsername($email, $username)
                         }
                     }
                 }
-                xmlHttp.open("GET",  "https://gifmessenger.nikigre.si/api.php?usernameExists=" + document.getElementById("username").value, true ); // true for asynchronous 
+                xmlHttp.open("GET",  "./database/exists.php?usernameExists=" + document.getElementById("username").value, true ); // true for asynchronous 
                 xmlHttp.send(null);
             }
     </script>
