@@ -1,0 +1,21 @@
+[22-May-2021 11:58:40 Europe/Ljubljana] PHP Fatal error:  Uncaught InvalidArgumentException: invalid json token in /home/nikigre/gifmessenger.nikigre.si/src/Client.php:500
+Stack trace:
+#0 /home/nikigre/gifmessenger.nikigre.si/redirect.php(20): Google\Client->setAccessToken(NULL)
+#1 {main}
+  thrown in /home/nikigre/gifmessenger.nikigre.si/src/Client.php on line 500
+[22-May-2021 12:19:57 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is allready set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 22
+[22-May-2021 12:23:21 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 22
+[22-May-2021 12:25:06 Europe/Ljubljana] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 43
+[22-May-2021 12:25:24 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 27
+[22-May-2021 12:25:31 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 27
+[22-May-2021 12:25:57 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:26:35 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:26:40 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:26:56 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:27:23 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:27:58 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 28
+[22-May-2021 12:33:59 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 30
+[22-May-2021 12:34:12 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 29
+[22-May-2021 12:35:55 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 29
+[22-May-2021 12:37:18 Europe/Ljubljana] PHP Parse error:  syntax error, unexpected '"efer"' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 8
+[22-May-2021 12:41:15 Europe/Ljubljana] PHP Warning:  mysqli::query(): (45000/1644): Username is already set! in /home/nikigre/gifmessenger.nikigre.si/setUsername.php on line 29
