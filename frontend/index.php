@@ -16,7 +16,7 @@ include("./database/redirect.php");
     <header>
         Gif Messenger
         <?php 
-        echo "<a target='_blank' href='".$client->createAuthUrl()."'>Google Login</a>";
+        echo "<a id='login' href='".$client->createAuthUrl()."'>Sign in</a>";
         ?>
     </header>
     <main>
