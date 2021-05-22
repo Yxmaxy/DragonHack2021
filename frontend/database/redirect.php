@@ -18,9 +18,7 @@ $client->addScope("profile");
 if (isset($_GET['code'])) {
   $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
   $client->setAccessToken($token['access_token']);
-  var_dump($token);
-  
-  echo "//\n\n";
+
   // get profile info
   $google_oauth = new Google_Service_Oauth2($client);
   $google_account_info = $google_oauth->userinfo->get();
