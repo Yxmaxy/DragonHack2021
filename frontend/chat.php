@@ -63,8 +63,18 @@ if(!isset($_SESSION['email']))
         socket = null;
 
         window.onload = () => {
+            
+            // da lahko kliknes enter za iskanje
+            const searchQuery = document.getElementById("searchQuery");
+            searchQuery.addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                requestGIFS();
+            }
+            });
+            
             // Create WebSocket connection.
-            socket = new WebSocket('ws://lj.leepush.eu:80');
+            socket = new WebSocket('ws://192.168.0.41:81');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
