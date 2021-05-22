@@ -45,6 +45,17 @@ main > div {
 
 #gifList {
     overflow: auto;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#gifList > div {
+    flex: 1;
+}
+
+#gifList > div > div {
+    margin: 5px;
 }
 
 #searchBar {
@@ -76,6 +87,10 @@ main > div {
     cursor: pointer;
 }
 
+#searchBar button:hover { 
+    background-color: rgb(235, 153, 1);
+}
+
 /* User (on the left) */
 .user {
     background-color: rgb(47, 54, 54);
@@ -85,6 +100,9 @@ main > div {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    user-select: none;
+    cursor: pointer;
 }
 
 .user img {

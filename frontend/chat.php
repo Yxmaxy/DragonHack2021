@@ -43,9 +43,11 @@
         </div>
         <div id="chat">
             <h3>Chatting with: </h3>
-            <div id="userChat">
-                <!-- Sem bo sel pogovor z uporabniki -->
-            </div>
+            <!--div id="userChat">
+                <div>
+                    16:17 - Marko
+                </div>
+            </div-->
             <div id="searchBar">
                 <input>
                 <button>🔎</button>
@@ -54,7 +56,10 @@
         </div>
         <div id="gifSearch">
             <h3>GIFS with keyword</h3>
-            <div id="gifList"></div>
+            <div id="gifList">
+                <div id="gifList1"></div>
+                <div id="gifList2"></div>
+            </div>
         </div>
     </main>
 </body>
