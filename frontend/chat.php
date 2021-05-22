@@ -50,11 +50,13 @@ if(!isset($_SESSION['email']))
                 var y = element[0].dims[1]
                 if (liha)
                 {
-                    div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                    //div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                    div[0].innerHTML += "<img src=\"" + url + "\">"
                 }
                 else
                 {
-                    div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                    //div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                    div[1].innerHTML += "<img src=\"" + url + "\">"
                 }
 
             });
