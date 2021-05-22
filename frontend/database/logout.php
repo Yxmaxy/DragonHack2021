@@ -1,12 +1,13 @@
 <?php
+include('redirect.php');
 session_start();
+$accesstoken=$_SESSION['access_token'];
 
-session_unset();
+//Reset OAuth access token
+$client->revokeToken($accesstoken);
 
-$_SESSION=array();
-
+//Destroy entire session data.
 session_destroy();
 
-header("Location: ../index.php");
-
-?>
+//redirect page to index.php
+header('location: ../index.php');

@@ -13,7 +13,9 @@ $client->setClientSecret($clientSecret);
 $client->setRedirectUri($redirectUri);
 $client->addScope("email");
 $client->addScope("profile");
-  
+ 
+session_start();
+
 // authenticate code from Google OAuth Flow
 if (isset($_GET['code'])) {
   $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
@@ -33,16 +35,15 @@ if (isset($_GET['code'])) {
 
   if($user !=false)
   {
-      session_start();
       $_SESSION['email'] = $email;
       $_SESSION['username'] = $user;
+      $_SESSION['access_token'] = $access_token;
 
       header("Location: ../chat.php");
   }
   else{
       InsertUser($email, $id_token, $access_token, $picture);
       
-      session_start();
       $_SESSION['email'] = $email;
       
       header("Location: ../setUsername.php");
