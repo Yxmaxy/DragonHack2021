@@ -12,21 +12,23 @@ class SimpleChat(WebSocket):
         if parameters["type"] == "client hello!":
             clients[parameters["username"]] = clients[str(self)]
             clients.pop(str(self))
+            self.send_message("{ \"type\": \"server hello!\" }")
 
         if parameters["type"] == "request":
-            self.send_message(tenorAPI.searchForGIFS(parameters["numOfGifs"], parameters["keywords"]))
+            self.send_message("{ \"type\": \"request return\", \"data\": " + tenorAPI.searchForGIFS(parameters["numOfGifs"], parameters["keywords"]) + " }")
             # Get GIFS and send them back to whom requested them.
 
         if parameters["type"] == "who online":
             clients_usernames = clients.keys()
-            self.send_message(json.dumps(clients_usernames))
+            self.send_message("{ \"type\": \"who online\", \"data\": " + json.dumps(clients_usernames) + " }")
 
         if parameters["type"] == "send":
             try:
                 clients[parameters["username"]].send_message(self.data)
+                self.send_message("{ \"type\": \"send\", \"status\": \"OK\" }")
             except:
                 self.send_message(
-                    "{ type: \"error\", error_type: \"User not found\", username: \"" + parameters["username"] + "\" }")
+                    "{ \"type\": \"error\", \"status\": \"User not found\", \"username\": \"" + parameters["username"] + "\" }")
 
     def connected(self):
         print(self.address, 'connected')
@@ -48,5 +50,5 @@ class SimpleChat(WebSocket):
 
 clients = dict()
 
-server = WebSocketServer('', 8000, SimpleChat)
+server = WebSocketServer('', 80, SimpleChat)
 server.serve_forever()
