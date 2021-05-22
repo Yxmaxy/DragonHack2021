@@ -37,15 +37,26 @@ if(!isset($_SESSION['email']))
         }*/
 
         function drawGifs(obj) {
-            div = document.getElementById("gifList");
-            div.innerHTML = "";
+            div = [document.getElementById("gifList1"), document.getElementById("gifList2")];
+            div[0].innerHTML = "";
+            div[1].innerHTML = "";
             //alert("Dela");
             console.log(obj);
+            liha = false;
             obj.forEach(element => {
+                liha = !liha;
                 var url = element[0].url
                 var x = element[0].dims[0]
                 var y = element[0].dims[1]
-                div.innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                if (liha)
+                {
+                    div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                }
+                else
+                {
+                    div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                }
+
             });
         }
 
@@ -53,13 +64,12 @@ if(!isset($_SESSION['email']))
 
         window.onload = () => {
             // Create WebSocket connection.
-            socket = new WebSocket('ws://localhost:81');
+            socket = new WebSocket('ws://lj.leepush.eu:80');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
-                //var connect = {type: "client hello!", username: document.getElementById("username").value}
-                //$_SESSION["username"] = "Bine";
-                var connect = {type: "client hello!", username: <?= $_SESSION["username"] ?>}
+                var username = document.getElementById("session_username").innerHTML;
+                var connect = {type: "client hello!", username: username}
                 var text = JSON.stringify(connect)
                 socket.send(text);
             });
@@ -84,8 +94,6 @@ if(!isset($_SESSION['email']))
         }
 
         function whoOnline() {
-            var st_slik = 30;
-            var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "who online"};
             var text = JSON.stringify(obj)
             socket.send(text);
@@ -128,5 +136,10 @@ if(!isset($_SESSION['email']))
             </div>
         </div>
     </main>
+
+    <?php
+    echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
+
+    ?>
 </body>
 </html>
