@@ -98,7 +98,7 @@ if (!isset($_SESSION['email'])) {
 
         function selectChat(i) {
 
-            var user = i["toElement"].innerText;
+            var user = i["currentTarget"].innerText;
             console.log(user);
             chat_username = user;
 
