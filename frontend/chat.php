@@ -80,7 +80,7 @@ if(!isset($_SESSION['email']))
 
             // Connection opened
             socket.addEventListener('open', function (event) {
-                var username = document.getElementById("session_username").innerHTML;
+                var username = "<?= $_SESSION["username"]?>"//document.getElementById("session_username").innerHTML;
                 var connect = {type: "client hello!", username: username}
                 var text = JSON.stringify(connect)
                 socket.send(text);
@@ -174,7 +174,7 @@ if(!isset($_SESSION['email']))
     </main>
 
     <?php
-    echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
+    //echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
 
     ?>
 </body>
