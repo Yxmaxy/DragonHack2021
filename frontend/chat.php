@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['email']))
-{
+if (!isset($_SESSION['email'])) {
     session_unset();
     //header("Location: index.php");
 }
@@ -36,6 +35,7 @@ if(!isset($_SESSION['email']))
             // ass.scrollTop = ass.scrollHeight;
         }*/
 
+
         function drawGifs(obj) {
             div = [document.getElementById("gifList1"), document.getElementById("gifList2")];
             div[0].innerHTML = "";
@@ -48,13 +48,10 @@ if(!isset($_SESSION['email']))
                 var url = element[0].url
                 var x = element[0].dims[0]
                 var y = element[0].dims[1]
-                if (liha)
-                {
+                if (liha) {
                     //div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
                     div[0].innerHTML += "<img src=\"" + url + "\">"
-                }
-                else
-                {
+                } else {
                     //div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
                     div[1].innerHTML += "<img src=\"" + url + "\">"
                 }
@@ -65,19 +62,18 @@ if(!isset($_SESSION['email']))
         socket = null;
 
         window.onload = () => {
-            
+
             // da lahko kliknes enter za iskanje
             const searchQuery = document.getElementById("searchQuery");
-            searchQuery.addEventListener("keyup", function(event) {
-            // Number 13 is the "Enter" key on the keyboard
-            if (event.keyCode === 13) {
-                requestGIFS();
-            }
+            searchQuery.addEventListener("keyup", function (event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    requestGIFS();
+                }
             });
-            
-            // Create WebSocket connection.
-            socket = new WebSocket('ws://192.168.0.41:81');
 
+            // Create WebSocket connection.
+            socket = new WebSocket('ws://lj.leepush.eu:80');
             // Connection opened
             socket.addEventListener('open', function (event) {
                 var username = document.getElementById("session_username").innerHTML;
@@ -90,19 +86,38 @@ if(!isset($_SESSION['email']))
             socket.addEventListener('message', function (event) {
                 console.log('Message from server ', event.data);
                 var obj = JSON.parse(event.data);
+                if (obj["type"] == "server hello !") {
+                    whoOnline();
+                }
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
                 }
+                if (obj["type"] == "who online") {
+                    colorOnlineUsers(obj["data"]);
+                }
             });
+
         }
 
         function requestGIFS() {
-
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
             var text = JSON.stringify(obj)
             socket.send(text);
+        }
+
+        function colorOnlineUsers(onlineUsers) {
+            console.log("Kurac");
+            console.log(onlineUsers);
+            /*usersList = document.getElementById("usersList").children;
+            console.log(usersList);
+            usersList.forEach(div => {
+                console.log(div.innerHTML);
+            });*/
+            onlineUsers.forEach(user => {
+                console.log("User (trenutno aktiven): " + user);
+            });
         }
 
         function whoOnline() {
@@ -114,44 +129,46 @@ if(!isset($_SESSION['email']))
     </script>
 </head>
 <body>
-    <header>
-        Gif Messenger
-        <a href="./database/logout.php"id='logInOutButton'>Log out</a>
-    </header>
-    <main>
-        <div id="users">
-            <h3>Users</h3>
-            <div id="usersList">
+<header>
+    Gif Messenger
+    <a href="./database/logout.php" id='logInOutButton'>Log out</a>
+</header>
+<main>
+    <div id="users">
+        <h3>Users</h3>
+        <div id="usersList">
             <?php
             include "./database/allUsers.php";
             ?>
-            </div>  
         </div>
-        <div id="chat">
-            <h3>Chatting with: </h3>
-            <!--div id="userChat">
-                <div>
-                    16:17 - Marko
-                </div>
-            </div-->
-            <div id="searchBar">
-                <input id="searchQuery" placeholder="Enter a keyword">
-                <button id="searchButton" onclick="requestGIFS()">🔎</button>
+    </div>
+    <div id="chat">
+        <h3>Chatting with: </h3>
+        <!--div id="userChat">
+            <div>
+                16:17 - Marko
             </div>
-        
+        </div-->
+        <div id="searchBar">
+            <input id="searchQuery" placeholder="Enter a keyword">
+            <button id="searchButton" onclick="requestGIFS()">🔎</button>
         </div>
-        <div id="gifSearch">
-            <h3>GIFS with keyword</h3>
-            <div id="gifList">
-                <div id="gifList1"></div>
-                <div id="gifList2"></div>
-            </div>
+
+    </div>
+    <div id="gifSearch">
+        <h3>GIFS with keyword</h3>
+        <div id="gifList">
+            <div id="gifList1"></div>
+            <div id="gifList2"></div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <?php
-    echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
+<?php
+echo '<p style="visibility: hidden" id="session_username">' . $_SESSION["username"] . '</p>';
 
-    ?>
+?>
+
+
 </body>
 </html>
