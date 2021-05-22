@@ -27,27 +27,30 @@
         }*/
 
         function drawGifs(obj) {
-            div = document.getElementById("slikice");
+            div = document.getElementById("gifList");
             div.innerHTML = "";
-            alert("Dela");
+            //alert("Dela");
             console.log(obj);
             obj.forEach(element => {
-                var url = element[1].url
-                var x = element[1].dims[0]
-                var y = element[1].dims[1]
-                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\"img>"
+                var url = element[0].url
+                var x = element[0].dims[0]
+                var y = element[0].dims[1]
+                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
             });
         }
 
         socket = null
+        connected = false;
 
         function connect() {
             // Create WebSocket connection.
-            socket = new WebSocket('ws://lj.leepush.eu:80');
+            socket = new WebSocket('ws://localhost:81');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
-                var connect = {type: "client hello!", username: document.getElementById("username").value}
+                //var connect = {type: "client hello!", username: document.getElementById("username").value}
+                //$_SESSION["username"] = "Bine";
+                var connect = {type: "client hello!", username: /*$_SESSION["username"]*/ "Bine"}
                 var text = JSON.stringify(connect)
                 socket.send(text);
             });
@@ -63,6 +66,13 @@
         }
 
         function requestGIFS() {
+
+            console.log("Dela");
+            if (!connected)
+            {
+                connect()
+            }
+
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
