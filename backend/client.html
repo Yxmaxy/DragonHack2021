@@ -41,6 +41,14 @@
             }
         });
 
+         function connect() {
+            var st_slik = document.getElementById("st_slik").value;
+            var GIFkeywords = document.getElementById("keywords").value.split(":");
+            var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
+            var text = JSON.stringify(obj)
+            socket.send(text);
+        }
+
         function sendMessage() {
             var st_slik = document.getElementById("st_slik").value;
             var GIFkeywords = document.getElementById("keywords").value.split(":");
