@@ -7,6 +7,25 @@
     <title>Gif Messenger</title>
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/chat.css">
+
+    <script>
+        window.onload = () => {
+            const seznam = document.getElementById("usersList");
+            const rit = document.getElementById("userChat");
+            const ass = document.getElementById("gifList");
+
+            for (let i = 0; i <= 50; i++) {
+                const div = document.createElement("div");
+                div.classList.add("user");
+                div.textContent = "Nek uporabnik" + i
+                
+                seznam.appendChild(div);
+            }
+            
+            // za scrollanje do dol
+            //ass.scrollTop = ass.scrollHeight;
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -17,8 +36,6 @@
         <div id="users">
             <h3>Users</h3>
             <div id="usersList">
-                <!-- Sem bo sel seznam uporabnikov -->
-                <div class="user">Neki uporabnik</div>
                 <div class="user">Neki uporabnik</div>
             </div>  
         </div>
@@ -33,7 +50,10 @@
             </div>
         
         </div>
-        <div id="gifSearch"><h3>GIFS with keyword</h3></div>
+        <div id="gifSearch">
+            <h3>GIFS with keyword</h3>
+            <div id="gifList"></div>
+        </div>
     </main>
 </body>
 </html>

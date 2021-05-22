@@ -7,22 +7,44 @@ main {
     display: flex;
     flex-direction: row;
 
-    flex-grow: 1
+    flex-grow: 1;
+
+    overflow: auto;
+}
+
+main > div {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #users {
     flex: 1.3;
     background-color: rgb(51, 64, 64);
+
+}
+
+#usersList {
+    overflow: auto;
+}
+
+#userChat {
+    overflow: auto;
+    margin-bottom: calc(3ch + 20px);
 }
 
 #chat {
     flex: 3;
-    position:relative;
+    position: relative;
 }
 
 #gifSearch {
     flex: 2;
     background-color: rgb(51, 64, 64);
+}
+
+#gifList {
+    overflow: auto;
 }
 
 #searchBar {
