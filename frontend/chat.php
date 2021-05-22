@@ -25,6 +25,51 @@
             // za scrollanje do dol
             // ass.scrollTop = ass.scrollHeight;
         }*/
+
+        function drawGifs(obj) {
+            div = document.getElementById("slikice");
+            div.innerHTML = "";
+            alert("Dela");
+            console.log(obj);
+            obj.forEach(element => {
+                var url = element[1].url
+                var x = element[1].dims[0]
+                var y = element[1].dims[1]
+                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\"img>"
+            });
+        }
+
+        socket = null
+
+        function connect() {
+            // Create WebSocket connection.
+            socket = new WebSocket('ws://lj.leepush.eu:80');
+
+            // Connection opened
+            socket.addEventListener('open', function (event) {
+                var connect = {type: "client hello!", username: document.getElementById("username").value}
+                var text = JSON.stringify(connect)
+                socket.send(text);
+            });
+
+            // Listen for messages
+            socket.addEventListener('message', function (event) {
+                console.log('Message from server ', event.data);
+                var obj = JSON.parse(event.data);
+                if (obj["type"] == "request return") {
+                    drawGifs(obj["data"]);
+                }
+            });
+        }
+
+        function requestGIFS() {
+            var st_slik = 30;
+            var GIFkeywords = document.getElementById("searchQuery").value.split(",");
+            var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
+            var text = JSON.stringify(obj)
+            socket.send(text);
+        }
+
     </script>
 </head>
 <body>
@@ -49,8 +94,8 @@
                 </div>
             </div-->
             <div id="searchBar">
-                <input placeholder="Enter a keyword">
-                <button>🔎</button>
+                <input id="searchQuery" placeholder="Enter a keyword">
+                <button id="searchButton" onclick="requestGIFS()">🔎</button>
             </div>
         
         </div>
