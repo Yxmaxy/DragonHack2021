@@ -4,7 +4,7 @@ require_once 'vendor/autoload.php';
 // init configuration
 $clientID = '235250556017-pnuqpjd5j9oucktd0h9usnq9ca75a90h.apps.googleusercontent.com';
 $clientSecret = 'C-mn-vcRdrdXLclp8gNNQ9nM';
-$redirectUri = 'http://localhost/frontend/database/redirect.php';
+$redirectUri = 'http://gifmessenger.nikigre.si/frontend/database/redirect.php';
    
 // create Client Request to access Google API
 $client = new Google_Client();
