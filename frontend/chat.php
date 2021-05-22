@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['email']))
-{
+if (!isset($_SESSION['email'])) {
     session_unset();
     //header("Location: index.php");
 }
@@ -48,13 +47,10 @@ if(!isset($_SESSION['email']))
                 var url = element[0].url
                 var x = element[0].dims[0]
                 var y = element[0].dims[1]
-                if (liha)
-                {
+                if (liha) {
                     //div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
                     div[0].innerHTML += "<img src=\"" + url + "\">"
-                }
-                else
-                {
+                } else {
                     //div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
                     div[1].innerHTML += "<img src=\"" + url + "\">"
                 }
@@ -63,24 +59,25 @@ if(!isset($_SESSION['email']))
         }
 
         socket = null;
+        chat_username = null;
 
         window.onload = () => {
-            
+
             // da lahko kliknes enter za iskanje
             const searchQuery = document.getElementById("searchQuery");
-            searchQuery.addEventListener("keyup", function(event) {
-            // Number 13 is the "Enter" key on the keyboard
-            if (event.keyCode === 13) {
-                requestGIFS();
-            }
+            searchQuery.addEventListener("keyup", function (event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    requestGIFS();
+                }
             });
-            
+
             // Create WebSocket connection.
             socket = new WebSocket('ws://192.168.0.41:81');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
-                var username = "<?= $_SESSION["username"]?>"//document.getElementById("session_username").innerHTML;
+                var username = "<?= $_SESSION["username"]?>";//document.getElementById("session_username").innerHTML;
                 var connect = {type: "client hello!", username: username}
                 var text = JSON.stringify(connect)
                 socket.send(text);
@@ -99,6 +96,15 @@ if(!isset($_SESSION['email']))
             });
         }
 
+        function selectChat(i) {
+
+            var user = i["toElement"].innerText;
+            console.log(user);
+            chat_username = user;
+
+            document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
+        }
+
         function requestGIFS() {
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
@@ -113,24 +119,20 @@ if(!isset($_SESSION['email']))
             socket.send(text);
         }
 
-        function markupOnlineUsers(onlineUsers)
-        {
+        function markupOnlineUsers(onlineUsers) {
             arrayOfUsers = document.getElementById("usersList").children;
-            for (var i = 0; i < arrayOfUsers.length; i++)
-            {
+            for (var i = 0; i < arrayOfUsers.length; i++) {
                 var user = arrayOfUsers[i];
                 const regex = /<img.*>/i;
                 var username = user.innerHTML.replace(regex, "").replaceAll("\n", "").replace(/^ */i, "").replace(/ *$/i, "");
                 console.log("MarkupOnlineUsers: " + username);
-                if (onlineUsers.includes(username))
-                {
+                if (onlineUsers.includes(username)) {
                     user.style.backgroundColor = "green";
-                    user.enabled = true;
-                }
-                else
-                {
+                    user.style.enabled = true;
+                    user.addEventListener("click", function(x) {selectChat(x);});
+                } else {
                     user.style.backgroundColor = "rgb(47, 54, 54)";
-                    user.enabled = false;
+                    user.style.enabled = false;
                 }
             }
         }
@@ -138,44 +140,44 @@ if(!isset($_SESSION['email']))
     </script>
 </head>
 <body>
-    <header>
-        Gif Messenger
-        <a href="./database/logout.php" class='styledButton'>Log out</a>
-    </header>
-    <main>
-        <div id="users">
-            <h3>Users</h3>
-            <div id="usersList">
+<header>
+    Gif Messenger
+    <a href="./database/logout.php" class='styledButton'>Log out</a>
+</header>
+<main>
+    <div id="users">
+        <h3>Users</h3>
+        <div id="usersList">
             <?php
             include "./database/allUsers.php";
             ?>
-            </div>  
         </div>
-        <div id="chat">
-            <h3>Chatting with: </h3>
-            <!--div id="userChat">
-                <div>
-                    16:17 - Marko
-                </div>
-            </div-->
-            <div id="searchBar">
-                <input id="searchQuery" placeholder="Enter a keyword">
-                <button id="searchButton" onclick="requestGIFS()">🔎</button>
+    </div>
+    <div id="chat">
+        <h3 id="chattingWith">Chatting with: </h3>
+        <!--div id="userChat">
+            <div>
+                16:17 - Marko
             </div>
-        
+        </div-->
+        <div id="searchBar">
+            <input id="searchQuery" placeholder="Enter a keyword">
+            <button id="searchButton" onclick="requestGIFS()">🔎</button>
         </div>
-        <div id="gifSearch">
-            <h3>GIFS with keyword</h3>
-            <div id="gifList">
-                <div id="gifList1"></div>
-                <div id="gifList2"></div>
-            </div>
+
+    </div>
+    <div id="gifSearch">
+        <h3>GIFS with keyword</h3>
+        <div id="gifList">
+            <div id="gifList1"></div>
+            <div id="gifList2"></div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <?php
-    //echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
+<?php
+//echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
 
-    ?>
+?>
 </body>
 </html>

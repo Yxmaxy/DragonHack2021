@@ -16,7 +16,7 @@
         //echo "<script>console.log('tu sem')</script>";
         echo "<div class='user'>
                 <img src='" . $row["picture"] . "'>
-                " . $row["UserName"]  . "
+                " . $row["UserName"]  . " 
             </div>";
     }
     } else {
