@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['email']))
+{
+    session_unset();
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,16 +45,15 @@
                 var url = element[0].url
                 var x = element[0].dims[0]
                 var y = element[0].dims[1]
-                div.innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
+                div.innerHTML += "<br><img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
             });
         }
 
         socket = null
+        connected = false;
 
-        window.onload = () => {
+        function connect() {
             // Create WebSocket connection.
-
-            console.log("Dela");
             socket = new WebSocket('ws://localhost:81');
 
             // Connection opened
@@ -66,8 +75,13 @@
             });
         }
 
-
         function requestGIFS() {
+
+            console.log("Dela");
+            if (!connected)
+            {
+                connect()
+            }
 
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
@@ -81,7 +95,7 @@
 <body>
     <header>
         Gif Messenger
-        <a id='logInOutButton'>Log out</a>
+        <a href="./database/logout.php"id='logInOutButton'>Log out</a>
     </header>
     <main>
         <div id="users">

@@ -12,5 +12,46 @@ main {
 }
 
 #gifs {
-    flex: 2
+    flex: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+#gifs > div {
+    flex: 1;
+
+    display: flex;
+    flex-direction: row;
+
+    animation-name: slide;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#gifs > div:nth-child(odd) {
+    animation-direction: alternate-reverse;
+}
+
+img {
+    max-height: 20vh;
+    margin: 10px;
+}
+
+@keyframes slide {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+#gifs div {
+    transform: translateX(0);
 }
