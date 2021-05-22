@@ -41,7 +41,7 @@ if(!isset($_SESSION['email']))
             div[0].innerHTML = "";
             div[1].innerHTML = "";
             //alert("Dela");
-            console.log(obj);
+            console.log("DrawGifs: " + obj);
             liha = false;
             obj.forEach(element => {
                 liha = !liha;
@@ -93,8 +93,8 @@ if(!isset($_SESSION['email']))
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
                 }
-                if (obj["type"] == "who online) {
-                    drawGifs(obj["data"]);
+                if (obj["type"] == "who online") {
+                    markupOnlineUsers(obj["data"]);
                 }
             });
         }
@@ -115,7 +115,22 @@ if(!isset($_SESSION['email']))
 
         function markupOnlineUsers(onlineUsers)
         {
-
+            arrayOfUsers = document.getElementById("usersList").children;
+            for (var i = 0; i < arrayOfUsers.length; i++)
+            {
+                var user = arrayOfUsers[i];
+                const regex = /<img.*>/i;
+                var username = user.innerHTML.replace(regex, "").replaceAll(" ", "").replaceAll("\n", "");
+                console.log("MarkupOnlineUsers: " + username);
+                if (onlineUsers.contains(username))
+                {
+                    user.style.backgroundColor = "green";
+                }
+                else
+                {
+                    user.style.backgroundColor = "rgb(47, 54, 54)";
+                }
+            }
         }
 
     </script>
