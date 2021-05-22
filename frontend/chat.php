@@ -140,7 +140,7 @@ if(!isset($_SESSION['email']))
 <body>
     <header>
         Gif Messenger
-        <a href="./database/logout.php"id='logInOutButton'>Log out</a>
+        <a href="./database/logout.php" class='styledButton'>Log out</a>
     </header>
     <main>
         <div id="users">

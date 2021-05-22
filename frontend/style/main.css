@@ -38,7 +38,7 @@ main {
     font-family: Helvetica, sans-serif;
 }
 
-#logInOutButton {
+.styledButton {
     text-decoration: none;
     color: whitesmoke;
     font-size: clamp(0.5rem, 10vw, 1rem);
@@ -50,6 +50,6 @@ main {
     cursor: pointer;
 }
 
-#logInOutButton:hover { 
+.styledButton:hover { 
     background-color: rgb(235, 153, 1);
 }
