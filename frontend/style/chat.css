@@ -54,6 +54,10 @@ main > div {
     flex: 1;
 }
 
+#gifList > div > img{
+    width: 100%;
+}
+
 #gifList > div > div {
     margin: 5px;
 }
