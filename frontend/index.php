@@ -19,8 +19,6 @@ include("./database/redirect.php");
             
             for (let container of movingDivs) {
                 const duration = Math.random() * 5 + 7;
-                console.log(duration);
-
                 container.style.animationDuration = duration + "s";
             }
         }
