@@ -38,6 +38,11 @@ if (isset($_GET['code'])) {
   }
   else{
       InsertUser($email, $id_token, $access_token, $picture);
+      
+      session_start();
+      $_SESSION['email'] = $email;
+      
+      header("Location: setUsername.php");
   }
   
   
