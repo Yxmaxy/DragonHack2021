@@ -1,3 +1,16 @@
 main {
-    padding: 2vh 1vw 0 1vw;
+    display: flex;
+    flex-direction: row;
+
+    flex-grow: 1
+}
+
+#writing {
+    padding: 2vh 1vw 2vh 1vw;
+    background-color: rgb(51, 64, 64);
+    flex: 1.5;
+}
+
+#gifs {
+    flex: 2
 }
