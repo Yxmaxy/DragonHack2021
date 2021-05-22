@@ -93,11 +93,13 @@ if(!isset($_SESSION['email']))
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
                 }
+                if (obj["type"] == "who online) {
+                    drawGifs(obj["data"]);
+                }
             });
         }
 
         function requestGIFS() {
-
             var st_slik = 30;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
@@ -109,6 +111,11 @@ if(!isset($_SESSION['email']))
             var obj = {type: "who online"};
             var text = JSON.stringify(obj)
             socket.send(text);
+        }
+
+        function markupOnlineUsers(onlineUsers)
+        {
+
         }
 
     </script>
