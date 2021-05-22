@@ -7,8 +7,9 @@ if(isset($_POST['username']))
     $rez = UpdateUsername($_SESSION['email'], $_POST['username']);
     
     if($rez==0)
-    {
-        echo "POSODOBLJENO";
+    {		
+		$_SESSION['username'] = $_POST['username'];
+        header("Location: ../chat.php");
     }
     else if($rez==1){
         echo "Že nastavljeno";

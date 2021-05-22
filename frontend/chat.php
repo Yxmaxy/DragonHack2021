@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['email']))
+{
+    session_unset();
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +95,7 @@
 <body>
     <header>
         Gif Messenger
-        <a id='logInOutButton'>Log out</a>
+        <a href="./database/logout.php"id='logInOutButton'>Log out</a>
     </header>
     <main>
         <div id="users">
