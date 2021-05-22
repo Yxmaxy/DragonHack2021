@@ -125,11 +125,12 @@ if(!isset($_SESSION['email']))
                 if (onlineUsers.includes(username))
                 {
                     user.style.backgroundColor = "green";
-                    user.ena
+                    user.enabled = true;
                 }
                 else
                 {
                     user.style.backgroundColor = "rgb(47, 54, 54)";
+                    user.enabled = false;
                 }
             }
         }
