@@ -2,3 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/nikigre/gifmessenger.nikigre.si/code/
+    - /bin/cp * $DEPLOYPATH
