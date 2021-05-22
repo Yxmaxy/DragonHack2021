@@ -17,6 +17,9 @@ if(!isset($_SESSION['email']))
     <title>Gif Messenger</title>
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/chat.css">
+    <link rel="stylesheet" href="style/ownGif.css">
+
+    <script src="ownGifHandler.js"></script>
 
     <script>
         /*window.onload = () => {
@@ -134,7 +137,7 @@ if(!isset($_SESSION['email']))
                 }
             }
         }
-
+        
     </script>
 </head>
 <body>
@@ -165,7 +168,7 @@ if(!isset($_SESSION['email']))
         
         </div>
         <div id="gifSearch">
-            <h3>GIFS with keyword</h3>
+            <h3>GIFS with keyword <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
             <div id="gifList">
                 <div id="gifList1"></div>
                 <div id="gifList2"></div>
@@ -173,9 +176,79 @@ if(!isset($_SESSION['email']))
         </div>
     </main>
 
-    <?php
-    //echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
-
-    ?>
+    <div id="makeOwnGifWrapper">
+        <div id="makeOwnGif">
+            <div id="settings">
+                <div>
+                    <h2>Upper text</h3>
+                    <table>
+                        <tr>
+                            <td>Text:</td>
+                            <td>
+                                <input type="text" value="" onkeyup="changeText(this.value, 'upper')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Size:</td>
+                            <td>
+                                <input type="number" value="25" onchange="changeFont(this.value, 'upper')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Is bold?</td>
+                            <td>
+                                <input id="upperTextBoldCheck" type="checkbox" onchange="changeIsBold(this.checked, 'upper')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Font color:</td>
+                            <td>
+                                <input type="color" onchange="changeColor(this.value, 'upper')">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h2>Lower text</h3>
+                    <table>
+                        <tr>
+                            <td>Text:</td>
+                            <td>
+                                <input type="text" value="" onkeyup="changeText(this.value, 'lower')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Size:</td>
+                            <td>
+                                <input type="number" value="25" onchange="changeFont(this.value, 'lower')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Is bold?</td>
+                            <td>
+                                <input id="upperTextBoldCheck" type="checkbox" onchange="changeIsBold(this.checked, 'lower')">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Font color:</td>
+                            <td>
+                                <input type="color" onchange="changeColor(this.value, 'lower')">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="imageContainer">
+                <img src="https://media.tenor.com/images/d7afbeb5c3b3efc48a86eb2c3450ceb8/tenor.gif">
+                <div id="upperText"></div>
+                <div id="lowerText"></div>
+            </div>
+            <div>
+                <button class="styledButton">OKE</button>
+                <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='none'">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>

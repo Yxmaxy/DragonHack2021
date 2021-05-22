@@ -1,0 +1,59 @@
+.imageContainer {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.imageContainer > div {
+    position: absolute;
+    width: 100%;
+    word-wrap: break-word;
+    user-select: none;
+
+    font-size: 25px;
+    color: black;
+}
+
+#upperText {
+    top: 0;
+    left: 0;
+}
+
+#lowerText {
+    bottom: 4px;
+    left: 0;
+}
+
+#makeOwnGifWrapper {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+
+    justify-content: center;
+    align-items: center;
+    font-family: Helvetica, sans-serif;
+
+    display: none;
+}
+
+#makeOwnGif {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    padding: 50px;
+    border-radius: 20px;
+
+    background-color: rgb(47, 54, 54);
+    color: whitesmoke;
+}
+
+#settings {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+#settings:first-child div:first-child{
+    margin-right: 10px;
+}
