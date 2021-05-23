@@ -55,11 +55,19 @@ if (!isset($_SESSION['email'])) {
         chat_username = null;
         currentLink = "";
 
-        function drawGIF()
+        function drawGIF(connect)
         {
             const sporocilo1 = document.createElement("div");
             const ime1 = document.createElement("div");
             const img1 = document.createElement("img");
+            ime1.innerHTML = connect.sender;
+            img1.src = connect.message;
+            img1.onload = () => {
+                userChat.scrollTop = userChat.scrollHeight;
+            }
+            sporocilo1.appendChild(ime1);
+            sporocilo1.appendChild(img1);
+            return sporocilo1;
         }
 
 
