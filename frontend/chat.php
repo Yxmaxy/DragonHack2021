@@ -244,10 +244,11 @@ if (!isset($_SESSION['email'])) {
                 chatArchive[username] = document.createElement("div");
 
                 // if user is online
-                if (onlineUsers.includes(username)) {
+                if (onlineUsers.includes(username) && username != currentUser) {
                     user.style.backgroundColor = "green";
-                    user.style.enabled = true;
+                    user.disabled = false;
                     user.addEventListener("click", function(x) {selectChat(x);});
+                    
                 } else {
                     user.style.backgroundColor = "rgb(47, 54, 54)";
                     user.style.enabled = false;
