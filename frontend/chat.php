@@ -200,7 +200,7 @@ if (!isset($_SESSION['email'])) {
         <div id="makeOwnGif">
             <div id="settings">
                 <div>
-                    <h2>Upper text</h3>
+                    <h2>Upper text</h2>
                     <table>
                         <tr>
                             <td>Text:</td>
@@ -229,7 +229,7 @@ if (!isset($_SESSION['email'])) {
                     </table>
                 </div>
                 <div>
-                    <h2>Lower text</h3>
+                    <h2>Lower text</h2>
                     <table>
                         <tr>
                             <td>Text:</td>

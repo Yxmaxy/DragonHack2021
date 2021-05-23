@@ -1,17 +1,15 @@
 import json
 
 from simple_websocket_server import WebSocketServer, WebSocket
+
 import tenorAPI
 
 
 class SimpleChat(WebSocket):
     def handle(self):
-        # Decodes JSON string into object parameters.
         parameters = json.loads(self.data)
 
         if parameters["type"] == "client hello!":
-            # If type of message is client hello!, which means client identifies itself with username we replace
-            # current name (key of dictionary of websockets) with users username, which is later used for
             print("CLIENT HELLO!: " + parameters["username"])
             clients[parameters["username"]] = clients[str(self)]
             clients.pop(str(self))
