@@ -20,14 +20,15 @@ if (!isset($_SESSION['email'])) {
 
     <script src="ownGifHandler.js"></script>
     <script>
-        const currentUser = <?php echo "\"" . $_SESSION["username"] . "\""; ?>
+        const currentUser = <?php echo "\"" . $_SESSION["username"] . "\";"; ?>
+        const chatArchive = {};
 
         function drawGifs(obj) {
             div = [document.getElementById("gifList1"), document.getElementById("gifList2")];
             div[0].innerHTML = "";
             div[1].innerHTML = "";
             //alert("Dela");
-            console.log("DrawGifs: " + obj);
+            //console.log("DrawGifs: " + obj);
             liha = false;
             obj.forEach(element => {
                 liha = !liha;
@@ -54,6 +55,7 @@ if (!isset($_SESSION['email'])) {
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
             var text = JSON.stringify(connect)
             socket.send(text);
+            archiveChat(connect.username, currentUser, connect.message);
         }
 
 
@@ -81,7 +83,7 @@ if (!isset($_SESSION['email'])) {
 
             // Listen for messages
             socket.addEventListener('message', function (event) {
-                console.log('Message from server ', event.data);
+                //console.log('Message from server ', event.data);
                 var obj = JSON.parse(event.data);
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
@@ -90,38 +92,43 @@ if (!isset($_SESSION['email'])) {
                     markupOnlineUsers(obj["data"]);
                 }
                 if (obj["type"] == "send") {
-                    createMessage(obj["message"], obj["sender"]);
+                    createMessage(obj["message"], obj["sender"], obj["username"]);
                 }
             });
         }
 
-        function createMessage(message, username) {
-            if (username == undefined) {
-                username = currentUser;
-                message = currentLink;
-            }
-
-            const userChat = document.getElementById("userChat");
-
-            const sporocilo = document.createElement("div");
-            const ime = document.createElement("div");
-            const img = document.createElement("img");
-            ime.innerHTML = username;
-            img.src = message;
-            img.onload = () => {
-                userChat.scrollTop = userChat.scrollHeight;
-            }
+        function createMessage(message, sender, reciever) {
             
-            sporocilo.appendChild(ime);
-            sporocilo.appendChild(img);
+                
+                
+            archiveChat(sender, sender, message);
+        }
 
-            userChat.appendChild(sporocilo);
+        function archiveChat(sender, reciever, message) {
+            if (sender != undefined) {
+                console.log(sender, reciever, message)
+                
+                const sporocilo = document.createElement("div");
+                const ime = document.createElement("div");
+                const img = document.createElement("img");
+                ime.innerHTML = reciever;
+                img.src = message;
+                img.onload = () => {
+                    userChat.scrollTop = userChat.scrollHeight;
+                }
+                
+                sporocilo.appendChild(ime);
+                sporocilo.appendChild(img);
+
+                chatArchive[reciever].appendChild(sporocilo);
+                document.getElementById("userChat").appendChild(sporocilo);
+
+                console.log(chatArchive[reciever]);
+            }
         }
 
         function selectChat(i) {
-
             var user = i["currentTarget"].innerText;
-            console.log(user);
             chat_username = user;
 
             document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
@@ -147,7 +154,12 @@ if (!isset($_SESSION['email'])) {
                 var user = arrayOfUsers[i];
                 const regex = /<img.*>/i;
                 var username = user.innerHTML.replace(regex, "").replaceAll("\n", "").replace(/^ */i, "").replace(/ *$/i, "");
-                console.log("MarkupOnlineUsers: " + username);
+                
+                // ta div je pol da ga uvozimo namest onih retardov
+                const div = document.createElement("div");
+                div.setAttribute("id", "userChat");
+                chatArchive[username] = div;
+
                 if (onlineUsers.includes(username)) {
                     user.style.backgroundColor = "green";
                     user.style.enabled = true;
