@@ -1,14 +1,13 @@
 <?php
 session_start();
 
-if(!$_SESSION['username'])
-{
+if (!$_SESSION['username']) {
     header("Location: setUsername.php");
 }
 
 if (!isset($_SESSION['email'])) {
     session_unset();
-    //header("Location: index.php");
+    header("Location: index.php");
 }
 ?>
 

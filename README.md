@@ -22,7 +22,6 @@ A repository of our project, GIF Messenger, submitted at DragonHack 2021. It is 
     └── frontend		The main folder of our project.
         ├── alert.mp3		Sound file for new messages.
         ├── chat.php		Page for chatting with other people.
-        ├── chat_old.php		Backup file.
         ├── database		Folder containing database and Google login functions.
         │   ├── allUsers.php		Returns all logged-in users.
         │   ├── db.php		MySQL database connection.
@@ -34,17 +33,13 @@ A repository of our project, GIF Messenger, submitted at DragonHack 2021. It is 
         ├── index.php		Landing page for new users.
         ├── ownGifHandler.js		JS file for creating own GIF.
         ├── setUsername.php		Webpage for setting username.
-        ├── style		CSS styles.
-        │   ├── AppleTea-jELql.otf		Chosen font.
-        │   ├── chat.css		CSS for chat file.
-        │   ├── landing.css		CSS for the landing page.
-        │   ├── main.css		Main CSS.
-        │   ├── ownGif.css		CSS for creating own GIF.
-        │   └── setUsername.css		CSS for setting username.
-        └── tmp		Some testing files.
-            ├── count.gif
-            ├── earth.gif
-            └── jajca.gif
+        └── style		CSS styles.
+            ├── AppleTea-jELql.otf		Chosen font.
+            ├── chat.css		CSS for chat file.
+            ├── landing.css		CSS for the landing page.
+            ├── main.css		Main CSS.
+            ├── ownGif.css		CSS for creating own GIF.
+            └── setUsername.css		CSS for setting username.
 
 
 ## Code
