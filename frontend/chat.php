@@ -37,50 +37,57 @@ if (!isset($_SESSION['email'])) {
             div[1].innerHTML = "";
             liha = false;
 
+            // loop alternates between sides of the gif list
             obj.forEach(element => {
                 liha = !liha;
+
                 var url = element[0].url;
                 var bigUrl = element[1].url;
                 var x = element[0].dims[0];
                 var y = element[0].dims[1];
+                
                 if (liha) {
-                    //div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
-                    div[0].innerHTML += "<img onclick='Send(\""+bigUrl+"\");' src=\"" + url + "\">"
+                    div[0].innerHTML += "<img onclick='Send(\""+bigUrl+"\");' src=\"" + url + "\">";
                 } else {
-                    //div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
-                    div[1].innerHTML += "<img onclick='Send(\""+bigUrl+"\");' src=\"" + url + "\">"
+                    div[1].innerHTML += "<img onclick='Send(\""+bigUrl+"\");' src=\"" + url + "\">";
                 }
             });
         }
 
+        // is used for drawing GIFs in the chat view
         function drawGIF(connect) {
             const userChat = document.getElementById("userChat");
-            const sporocilo = document.createElement("div");
+            const container = document.createElement("div");
             const ime = document.createElement("div");
             const img = document.createElement("img");
+
             ime.innerHTML = connect.sender;
             img.src = connect.message;
             img.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
             }
-            sporocilo.appendChild(ime);
-            sporocilo.appendChild(img);
-            return sporocilo;
+
+            container.appendChild(ime);
+            container.appendChild(img);
+            
+            return container;
         }
 
-        function drawWrappedGIF(connect)
-        {
+        // the same as above, except used for gifs with custom text
+        function drawWrappedGIF(connect) {
             const userChat = document.getElementById("userChat");
             
             const container = document.createElement("div");
             container.classList.add("imageContainer"); 
             const ime = document.createElement("div");
             const img = document.createElement("img");
+
             ime.innerHTML = connect.sender;
             img.src = connect.message;
             img.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
             }
+
             const upperTextDiv = document.createElement("div");
             upperTextDiv.classList.add("upperText");
             upperTextDiv.textContent = connect.upperText;
@@ -96,15 +103,16 @@ if (!isset($_SESSION['email'])) {
             return container;
         }
 
-
+        // used for sending data over sockets
         function Send(params, upperText, lowerText) {
             currentLink = params;
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
-            
 
             if (upperText != undefined || lowerText != undefined) {
+                // data is modified to include top and bottom text of gif with custom text
                 connect = {type: "send", username: chat_username, message: params, sender: currentUser, upperText: upperText, lowerText, lowerText};
                 
+                // data is sent via socket
                 var text = JSON.stringify(connect)
                 socket.send(text);
                 
@@ -112,18 +120,18 @@ if (!isset($_SESSION['email'])) {
                 chatArchive[connect.username].appendChild(drawWrappedGIF(connect));
                 
             } else {
+                // data is sent via socket
                 var text = JSON.stringify(connect)
                 socket.send(text);
+
                 userChat.appendChild(drawGIF(connect));
                 chatArchive[connect.username].appendChild(drawGIF(connect));
             }
-
-            console.log(chatArchive[connect.username],connect.username);
         }
 
 
         window.onload = () => {
-            // da lahko kliknes enter za iskanje
+            // so that it's possible to press Enter to search
             const searchQuery = document.getElementById("searchQuery");
             searchQuery.addEventListener("keyup", function (event) {
                 // Number 13 is the "Enter" key on the keyboard
@@ -138,8 +146,9 @@ if (!isset($_SESSION['email'])) {
 
             // Connection opened
             socket.addEventListener('open', function (event) {
-                var username = "<?= $_SESSION["username"]?>";//document.getElementById("session_username").innerHTML;
+                var username = "<?= $_SESSION["username"]?>";
                 var connect = {type: "client hello!", username: username}
+                
                 var text = JSON.stringify(connect)
                 socket.send(text);
             });
@@ -147,15 +156,19 @@ if (!isset($_SESSION['email'])) {
             // Listen for messages
             socket.addEventListener('message', function (event) {
                 var obj = JSON.parse(event.data);
+                // draws gifs
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
                 }
+                // gets online users
                 if (obj["type"] == "who online") {
                     markupOnlineUsers(obj["data"]);
                 }
+                // when gif data was recieved
                 if (obj["type"] == "send") {
                     createMessage(obj["message"], obj["sender"], obj["username"], obj["upperText"], obj["lowerText"]);
                     if (obj["username"] == currentUser) {
+                        // audio when gif is recieved
                         var audio = new Audio('alert.mp3');
                         audio.play();
                     }
@@ -165,10 +178,13 @@ if (!isset($_SESSION['email'])) {
 
         function createMessage(message, sender, reciever, upperText, lowerText) {
             if (sender != undefined) {
+                // check if we are dealing with a GIF with custom text
                 if (upperText != undefined || lowerText != undefined) {
+                    // modify data with upper and lower text
                     const connect = {username: reciever, message: message, sender: sender, upperText: upperText, lowerText: lowerText};
                     const userChat = document.getElementById("userChat");
 
+                    // so we know if we can show the message directly (we are chatting with the user who sent the gif)
                     if (sender == chat_username) {
                         userChat.appendChild(drawWrappedGIF(connect));
                     }
@@ -178,32 +194,16 @@ if (!isset($_SESSION['email'])) {
                     const connect = {username: reciever, message: message, sender: sender};
                     const userChat = document.getElementById("userChat");
 
+                    // so we know if we can show the message directly (we are chatting with the user who sent the gif)
                     if (sender == chat_username) {
                         userChat.appendChild(drawGIF(connect));
                     }
                     chatArchive[connect.sender].appendChild(drawGIF(connect));
                 }
             }
-
-            console.log(chatArchive[sender],sender);
         }
 
-        function archiveChat(sender, reciever, message) {
-            const sporocilo = document.createElement("div");
-            const ime = document.createElement("div");
-            const img = document.createElement("img");
-            ime.innerHTML = sender;
-            img.src = message;
-            img.onload = () => {
-                userChat.scrollTop = userChat.scrollHeight;
-            }
-            
-            sporocilo.appendChild(ime);
-            sporocilo.appendChild(img);
-
-            chatArchive[sender].appendChild(sporocilo);
-        }
-
+        // used for selecting user from left menu
         function selectChat(i) {
             var user = i["currentTarget"].innerText;
             chat_username = user;
@@ -213,8 +213,11 @@ if (!isset($_SESSION['email'])) {
             userChat.scrollTop = userChat.scrollHeight;
 
             document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
+            document.getElementById("searchQuery").disabled = false;
+            document.getElementById("searchButton").disabled = false;
         }
 
+        // for gifs in preview
         function requestGIFS() {
             var st_slik = 50;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
@@ -223,12 +226,14 @@ if (!isset($_SESSION['email'])) {
             socket.send(text);
         }
 
+        // for user list
         function whoOnline() {
             var obj = {type: "who online"};
             var text = JSON.stringify(obj)
             socket.send(text);
         }
 
+        // modifies the look of users in userList
         function markupOnlineUsers(onlineUsers) {
             arrayOfUsers = document.getElementById("usersList").children;
             for (var i = 0; i < arrayOfUsers.length; i++) {
@@ -236,9 +241,9 @@ if (!isset($_SESSION['email'])) {
                 const regex = /<img.*>/i;
                 var username = user.innerHTML.replace(regex, "").replaceAll("\n", "").replace(/^ */i, "").replace(/ *$/i, "");
                 
-                // ta div je pol da ga uvozimo namest onih retardov
                 chatArchive[username] = document.createElement("div");
 
+                // if user is online
                 if (onlineUsers.includes(username)) {
                     user.style.backgroundColor = "green";
                     user.style.enabled = true;
@@ -267,11 +272,11 @@ if (!isset($_SESSION['email'])) {
         </div>
     </div>
     <div id="chat">
-        <h3 id="chattingWith">Chatting with: </h3>
+        <h3 id="chattingWith">Please select a user from the list...</h3>
         <div id="userChat"></div>
         <div id="searchBar">
-            <input id="searchQuery" placeholder="Enter a keyword">
-            <button id="searchButton" onclick="requestGIFS()">🔎</button>
+            <input id="searchQuery" placeholder="Enter a keyword" disabled>
+            <button id="searchButton" onclick="requestGIFS()" disabled>🔎</button>
         </div>
 
     </div>
