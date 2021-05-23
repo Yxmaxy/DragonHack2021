@@ -155,6 +155,14 @@ if (!isset($_SESSION['email'])) {
                 }
                 if (obj["type"] == "send") {
                     createMessage(obj["message"], obj["sender"], obj["username"]);
+                    console.log("Pred zvokom");
+                    console.table(obj["status"]);
+                    if (obj["username"] == currentUser)
+                    {
+                        var audio = new Audio('alert.mp3');
+                        audio.play();
+                    }
+                    console.log("Po zvokom");
                 }
             });
         }
