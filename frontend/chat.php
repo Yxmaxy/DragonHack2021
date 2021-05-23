@@ -137,7 +137,7 @@ if (!isset($_SESSION['email'])) {
             });
 
             // Create WebSocket connection.
-            socket = new WebSocket('ws://192.168.0.19:81');
+            socket = new WebSocket('ws://server.gifmessenger.online');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
