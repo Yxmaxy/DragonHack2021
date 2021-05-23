@@ -87,7 +87,7 @@ if (!isset($_SESSION['email'])) {
             });
 
             // Create WebSocket connection.
-            socket = new WebSocket('ws://192.168.0.41:81');
+            socket = new WebSocket('wss://192.168.0.41:81');
 
             // Connection opened
             socket.addEventListener('open', function (event) {

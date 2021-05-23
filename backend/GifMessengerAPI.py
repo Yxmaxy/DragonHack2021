@@ -1,7 +1,7 @@
 import json
-
-from simple_websocket_server import WebSocketServer, WebSocket
+import ssl
 import tenorAPI
+from simple_websocket_server import WebSocketServer, WebSocket
 
 
 class SimpleChat(WebSocket):
@@ -28,7 +28,9 @@ class SimpleChat(WebSocket):
         # how many GIFS he/she wants to get and categories/keywords for searching GIFS. List of GIFS is send back
         # to whom requested them.
         if parameters["type"] == "request":
-            self.send_message("{ \"type\": \"request return\", \"data\": " + tenorAPI.searchForGIFS(parameters["numOfGifs"], parameters["keywords"]) + " }")
+            self.send_message(
+                "{ \"type\": \"request return\", \"data\": " + tenorAPI.searchForGIFS(parameters["numOfGifs"],
+                                                                                      parameters["keywords"]) + " }")
 
         # If type of message is who online, a list of online users is send back to whom requested them.
         # Although this functionality is mostly used when a new user comes online or goes offline it is nice to
@@ -47,7 +49,8 @@ class SimpleChat(WebSocket):
                 self.send_message("{ \"type\": \"send\", \"status\": \"OK\" }")
             except:
                 self.send_message(
-                    "{ \"type\": \"error\", \"status\": \"User not found\", \"username\": \"" + parameters["username"] + "\" }")
+                    "{ \"type\": \"error\", \"status\": \"User not found\", \"username\": \"" + parameters[
+                        "username"] + "\" }")
 
     # Function connected is executed when a new user connects to the server (comes online). Socket that is used for
     # communication with this specific user get a temporary unique name, which is later changed to users username.
@@ -70,9 +73,11 @@ class SimpleChat(WebSocket):
             clients_usernames = [x for x in clients.keys()]
             client_sock.send_message("{ \"type\": \"who online\", \"data\": " + json.dumps(clients_usernames) + " }")
 
+
 # List of online users and their WebSockets is initialized
 clients = dict()
 
 # WebSocketServer is set up and left running. Accepting and ending connections is done automatically.
-server = WebSocketServer('', 81, SimpleChat)
+server = WebSocketServer('', 81, SimpleChat, "certificate.cert", "privatekey.key", ssl.PROTOCOL_TLSv1_2)
+# server = WebSocketServer('', 81, SimpleChat)
 server.serve_forever()
