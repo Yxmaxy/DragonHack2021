@@ -40,11 +40,17 @@ include("./database/redirect.php");
         }
 
         function requestGIFS() {
-            var st_slik = 15;
-            var GIFkeywords = "cat, dogs, hey".split(",");
+            var st_slik = 13;
+            var all = ["cat", "dog", "mouse", "computer" , "hacking", "programming", "bby", "love you", "i hate you", "idk", "GIF", "mbby", "I don't", "RK"];
+            var GIFkeywords = [all[giveRandom(all.length)], all[giveRandom(all.length)], all[giveRandom(all.length)], all[giveRandom(all.length)] ];
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
             var text = JSON.stringify(obj)
             socket.send(text);
+        }
+
+        function giveRandom(max)
+        {
+            return Math.floor((Math.random() * max) + 1);
         }
 
         function drawGifs(obj) {
