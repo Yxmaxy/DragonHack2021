@@ -289,10 +289,6 @@ if (!isset($_SESSION['email'])) {
     </div>
 </main>
 
-<?php
-//echo '<p style="visibility: hidden" id="session_username">'.$_SESSION["username"].'</p>';
-
-?>
 <div id="makeOwnGifWrapper">
     <div id="makeOwnGif">
         <div id="settings">
