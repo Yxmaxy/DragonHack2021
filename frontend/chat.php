@@ -265,24 +265,6 @@ if (!isset($_SESSION['email'])) {
                             <input type="text" value="" onkeyup="changeText(this.value, 'upper')">
                         </td>
                     </tr>
-                    <tr>
-                        <td>Size:</td>
-                        <td>
-                            <input type="number" value="25" onchange="changeFont(this.value, 'upper')">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Is bold?</td>
-                        <td>
-                            <input id="upperTextBoldCheck" type="checkbox" onchange="changeIsBold(this.checked, 'upper')">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Font color:</td>
-                        <td>
-                            <input type="color" onchange="changeColor(this.value, 'upper')">
-                        </td>
-                    </tr>
                 </table>
             </div>
             <div>
@@ -292,24 +274,6 @@ if (!isset($_SESSION['email'])) {
                         <td>Text:</td>
                         <td>
                             <input type="text" value="" onkeyup="changeText(this.value, 'lower')">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Size:</td>
-                        <td>
-                            <input type="number" value="25" onchange="changeFont(this.value, 'lower')">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Is bold?</td>
-                        <td>
-                            <input id="upperTextBoldCheck" type="checkbox" onchange="changeIsBold(this.checked, 'lower')">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Font color:</td>
-                        <td>
-                            <input type="color" onchange="changeColor(this.value, 'lower')">
                         </td>
                     </tr>
                 </table>
