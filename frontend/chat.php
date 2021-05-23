@@ -57,17 +57,19 @@ if (!isset($_SESSION['email'])) {
 
         function drawGIF(connect)
         {
-            const sporocilo1 = document.createElement("div");
-            const ime1 = document.createElement("div");
-            const img1 = document.createElement("img");
-            ime1.innerHTML = connect.sender;
-            img1.src = connect.message;
-            img1.onload = () => {
+            const userChat = document.getElementById("userChat");
+            const sporocilo = document.createElement("div");
+            const ime = document.createElement("div");
+            const img = document.createElement("img");
+            img.style.width="100%";
+            ime.innerHTML = connect.sender;
+            img.src = connect.message;
+            img.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
             }
-            sporocilo1.appendChild(ime1);
-            sporocilo1.appendChild(img1);
-            return sporocilo1;
+            sporocilo.appendChild(ime);
+            sporocilo.appendChild(img);
+            return sporocilo;
         }
 
 
@@ -76,34 +78,10 @@ if (!isset($_SESSION['email'])) {
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
             var text = JSON.stringify(connect)
             socket.send(text);
-            //archiveChat(connect.sender, connect.username, connect.message);
 
-            const userChat = document.getElementById("userChat");
 
-            const sporocilo1 = document.createElement("div");
-            const sporocilo2 = document.createElement("div");
-            const ime1 = document.createElement("div");
-            const ime2 = document.createElement("div");
-            const img1 = document.createElement("img");
-            const img2 = document.createElement("img");
-            ime1.innerHTML = connect.sender;
-            ime2.innerHTML = connect.sender;
-            img1.src = connect.message;
-            img2.src = connect.message;
-            img1.onload = () => {
-                userChat.scrollTop = userChat.scrollHeight;
-            }
-            img2.onload = () => {
-                userChat.scrollTop = userChat.scrollHeight;
-            }
-            sporocilo1.appendChild(ime1);
-            sporocilo1.appendChild(img1);
-
-            sporocilo2.appendChild(ime2);
-            sporocilo2.appendChild(img2);
-            
-            userChat.appendChild(sporocilo1);
-            chatArchive[connect.username].appendChild(sporocilo2);
+            userChat.appendChild(drawGIF(connect));
+            chatArchive[connect.username].appendChild(drawGIF(connect));
 
             console.log(chatArchive[connect.username],connect.username);
         }
@@ -204,7 +182,7 @@ if (!isset($_SESSION['email'])) {
         }
 
         function requestGIFS() {
-            var st_slik = 100;
+            var st_slik = 50;
             var GIFkeywords = document.getElementById("searchQuery").value.split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
             var text = JSON.stringify(obj)
