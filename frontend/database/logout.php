@@ -1,6 +1,9 @@
 <?php
 include('redirect.php');
+
 session_start();
+
+//Dobi access token
 $accesstoken=$_SESSION['access_token'];
 
 //Reset OAuth access token

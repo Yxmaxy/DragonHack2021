@@ -1,5 +1,7 @@
 <?php
 
+//Izpiše vse uporabnike v sistemu v formatu, ki je prikazan na levi strani
+
 //session_start();
             
 //if(isset($_SESSION['email']))

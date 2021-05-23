@@ -1,48 +1,62 @@
 <?php
-
-if(isset($_POST['username']))
+//Če je post nastavljen, potem je bil form submitan
+if (isset($_POST['username']))
 {
     session_start();
-    
+	
+	//Posodobi uporabniško ime
     $rez = UpdateUsername($_SESSION['email'], $_POST['username']);
-    
-    if($rez==0)
-    {		
-		$_SESSION['username'] = $_POST['username'];
+
+	//Če je 0, potem pomeni, da je uspelo!
+    if ($rez == 0)
+    {
+		//Nastavi username in pojdi na chat
+        $_SESSION['username'] = $_POST['username'];
         header("Location: chat.php");
     }
-    else if($rez==1){
+	//Če je 1, to pomeni, da je username že nastavljen
+    else if ($rez == 1)
+    {
         echo "Že nastavljeno";
     }
-    else{
+	//Če je karkoli drugega, potem izpiši error
+    else
+    {
         echo "Error";
     }
-    
+
 }
 
-
+//Funkcija kliče funkcijo v MySQL za posodbaljanje uporabniškega imena
 function UpdateUsername($email, $username)
 {
     include "database/db.php";
-    
-    $sql="SELECT UpdateUsername('". mysqli_real_escape_string($conn, $_POST['username']) ."', '". mysqli_real_escape_string($conn, $email) ."')";
-    
+
+    $sql = "SELECT UpdateUsername('" . mysqli_real_escape_string($conn, $_POST['username']) . "', '" . mysqli_real_escape_string($conn, $email) . "')";
+
     $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+	//Če je več kot 1 vrstica, potem pomeni, da je uspelo in je vse ok :D
+    if ($result->num_rows > 0)
+    {
         return 0;
-    } else {
-          if(strpos($conn->error, "Username is")===false)
-          {
-              return 2;
-          }
-          else{
-              return 1;
-          }
     }
-        
+    else
+    {
+		//Če error vsebuje "Username is" (custom nastavljen error), to pomeni, da je uporabniško ime že nastavljeno
+        if (strpos($conn->error, "Username is") === false)
+        {
+            return 2;
+        }
+		//V nasprotnem primeru, vrne 1
+        else
+        {
+            return 1;
+        }
+    }
+
     $conn->close();
-    
+
 }
 
 ?>
