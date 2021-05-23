@@ -40,7 +40,7 @@ include("./database/redirect.php");
         }
 
         function requestGIFS() {
-            var st_slik = 10;
+            var st_slik = 15;
             var GIFkeywords = "cat, dogs, hey".split(",");
             var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
             var text = JSON.stringify(obj)
