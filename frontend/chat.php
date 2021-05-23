@@ -114,9 +114,17 @@ if (!isset($_SESSION['email'])) {
             const userChat = document.getElementById("userChat");
 
             const sporocilo = document.createElement("div");
-            sporocilo.textContent = "KURAC";
+            const ime = document.createElement("div");
+            const img = document.createElement("img");
+            ime.innerHTML = username;
+            img.src = message;
             
+            sporocilo.appendChild(ime);
+            sporocilo.appendChild(img);
+
             userChat.appendChild(sporocilo);
+
+            userChat.scrollTop = userChat.scrollHeight;
         }
 
         function selectChat(i) {
