@@ -104,9 +104,19 @@ if (!isset($_SESSION['email'])) {
                     markupOnlineUsers(obj["data"]);
                 }
                 if (obj["type"] == "send") {
-                    alert(obj["message"]);
+                    createMessage(obj["message"], obj["username"]);
                 }
             });
+        }
+
+        function createMessage(message, username) {
+            console.log(message, username);
+            const userChat = document.getElementById("userChat");
+
+            const sporocilo = document.createElement("div");
+            sporocilo.textContent = "KURAC";
+            
+            userChat.appendChild(sporocilo);
         }
 
         function selectChat(i) {
@@ -168,11 +178,7 @@ if (!isset($_SESSION['email'])) {
     </div>
     <div id="chat">
         <h3 id="chattingWith">Chatting with: </h3>
-        <!--div id="userChat">
-            <div>
-                16:17 - Marko
-            </div>
-        </div-->
+        <div id="userChat"></div>
         <div id="searchBar">
             <input id="searchQuery" placeholder="Enter a keyword">
             <button id="searchButton" onclick="requestGIFS()">🔎</button>
