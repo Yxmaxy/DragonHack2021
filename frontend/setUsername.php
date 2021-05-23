@@ -23,7 +23,7 @@ if(isset($_POST['username']))
 
 function UpdateUsername($email, $username)
 {
-    include "db.php";
+    include "database/db.php";
     
     $sql="SELECT UpdateUsername('". mysqli_real_escape_string($conn, $_POST['username']) ."', '". mysqli_real_escape_string($conn, $email) ."')";
     
