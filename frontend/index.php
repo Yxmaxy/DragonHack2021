@@ -21,6 +21,50 @@ include("./database/redirect.php");
                 const duration = Math.random() * 5 + 7;
                 container.style.animationDuration = duration + "s";
             }
+    
+            // Create WebSocket connection.
+            socket = new WebSocket('ws://server.gifmessenger.online');
+
+            // Connection opened
+            socket.addEventListener('open', function (event) {
+                requestGIFS();
+            });
+
+            // Listen for messages
+            socket.addEventListener('message', function (event) {
+                var obj = JSON.parse(event.data);
+                if (obj["type"] == "request return") {
+                    drawGifs(obj["data"]);
+                }
+            });
+        }
+
+        function requestGIFS() {
+            var st_slik = 10;
+            var GIFkeywords = "cat, dogs, hey".split(",");
+            var obj = {type: "request", numOfGifs: st_slik, keywords: GIFkeywords};
+            var text = JSON.stringify(obj)
+            socket.send(text);
+        }
+
+        function drawGifs(obj) {
+            div = [document.getElementById("first"),
+            document.getElementById("second"),
+            document.getElementById("third"),
+            document.getElementById("forth")];
+            var i=0;
+
+            obj.forEach(element => {
+                var url = element[0].url
+                var x = element[0].dims[0]
+                var y = element[0].dims[1]
+                
+                div[i].innerHTML +="<img src='"+url+"'>";
+
+                if(i==3)
+                    i=-1;
+                i++;
+            });
         }
     </script>
 </head>
@@ -43,41 +87,17 @@ include("./database/redirect.php");
             </p>
         </div>
         <div id="gifs">
-            <div>
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/count.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
+            <div id="first">
+
             </div>
-            <div>
-                <img src="tmp/count.gif">
-                <img src="tmp/count.gif">
-                <img src="tmp/jajca.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/count.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
+            <div id="second">
+  
             </div>
-            <div>
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/count.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
+            <div id="third">
+
             </div>
-            <div>
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/count.gif">
-                <img src="tmp/earth.gif">
-                <img src="tmp/earth.gif">
+            <div id="forth">
+
             </div>
         </div>
     </main>
