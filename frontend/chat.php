@@ -55,7 +55,23 @@ if (!isset($_SESSION['email'])) {
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
             var text = JSON.stringify(connect)
             socket.send(text);
-            archiveChat(connect.username, currentUser, connect.message);
+            archiveChat(connect.sender, connect.sender, connect.message);
+
+            const userChat = document.getElementById("userChat");
+
+            const sporocilo = document.createElement("div");
+            const ime = document.createElement("div");
+            const img = document.createElement("img");
+            ime.innerHTML = connect.sender;
+            img.src = connect.message;
+            img.onload = () => {
+                userChat.scrollTop = userChat.scrollHeight;
+            }
+            
+            sporocilo.appendChild(ime);
+            sporocilo.appendChild(img);
+
+            userChat.appendChild(sporocilo);
         }
 
 
@@ -98,20 +114,13 @@ if (!isset($_SESSION['email'])) {
         }
 
         function createMessage(message, sender, reciever) {
-            
-                
-                
-            archiveChat(sender, sender, message);
-        }
-
-        function archiveChat(sender, reciever, message) {
             if (sender != undefined) {
-                console.log(sender, reciever, message)
-                
+                const userChat = document.getElementById("userChat");
+
                 const sporocilo = document.createElement("div");
                 const ime = document.createElement("div");
                 const img = document.createElement("img");
-                ime.innerHTML = reciever;
+                ime.innerHTML = sender;
                 img.src = message;
                 img.onload = () => {
                     userChat.scrollTop = userChat.scrollHeight;
@@ -120,11 +129,31 @@ if (!isset($_SESSION['email'])) {
                 sporocilo.appendChild(ime);
                 sporocilo.appendChild(img);
 
-                chatArchive[reciever].appendChild(sporocilo);
-                document.getElementById("userChat").appendChild(sporocilo);
-
-                console.log(chatArchive[reciever]);
+                userChat.appendChild(sporocilo);
+                
+                archiveChat(sender, sender, message);
             }
+        }
+
+        function archiveChat(sender, reciever, message) {
+
+            console.log(sender, reciever, message)
+            
+            const sporocilo = document.createElement("div");
+            const ime = document.createElement("div");
+            const img = document.createElement("img");
+            ime.innerHTML = sender;
+            img.src = message;
+            img.onload = () => {
+                userChat.scrollTop = userChat.scrollHeight;
+            }
+            
+            sporocilo.appendChild(ime);
+            sporocilo.appendChild(img);
+
+            chatArchive[sender].appendChild(sporocilo);
+
+            console.log(chatArchive[sender]);
         }
 
         function selectChat(i) {
@@ -156,9 +185,7 @@ if (!isset($_SESSION['email'])) {
                 var username = user.innerHTML.replace(regex, "").replaceAll("\n", "").replace(/^ */i, "").replace(/ *$/i, "");
                 
                 // ta div je pol da ga uvozimo namest onih retardov
-                const div = document.createElement("div");
-                div.setAttribute("id", "userChat");
-                chatArchive[username] = div;
+                chatArchive[username] = document.createElement("div");
 
                 if (onlineUsers.includes(username)) {
                     user.style.backgroundColor = "green";
