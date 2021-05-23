@@ -78,6 +78,7 @@ if (!isset($_SESSION['email'])) {
                 // Number 13 is the "Enter" key on the keyboard
                 if (event.keyCode === 13) {
                     requestGIFS();
+                    document.getElementById("gifList").scrollTop = 0;
                 }
             });
 
