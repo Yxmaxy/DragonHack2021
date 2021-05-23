@@ -86,7 +86,7 @@ function UpdateUsername($email, $username)
         <form action="" method="POST">
             <label for="username">Desired username:</label><br>
             <input ID='username' name='username' type='text' maxlength='20' onchange='checkUsername();' onkeyup='checkUsername();' oninput='checkUsername();'>
-            <input id="logInOutButton" type="submit" id="submit" value="Set username!">
+            <input class="styledButton" type="submit" id="submit" value="Set username!">
             <div id='exists'></div>
         </form>
     </main>
