@@ -20,22 +20,7 @@ if (!isset($_SESSION['email'])) {
 
     <script src="ownGifHandler.js"></script>
     <script>
-        /*window.onload = () => {
-            const seznam = document.getElementById("usersList");
-            const rit = document.getElementById("userChat");
-            const ass = document.getElementById("gifList");
-
-            for (let i = 0; i <= 50; i++) {
-                const div = document.createElement("div");
-                div.classList.add("user");
-                div.textContent = "Nek uporabnik" + i
-                
-                seznam.appendChild(div);
-            }
-            
-            // za scrollanje do dol
-            // ass.scrollTop = ass.scrollHeight;
-        }*/
+        const currentUser = <?php echo "\"" . $_SESSION["username"] . "\""; ?>
 
         function drawGifs(obj) {
             div = [document.getElementById("gifList1"), document.getElementById("gifList2")];
@@ -62,16 +47,17 @@ if (!isset($_SESSION['email'])) {
 
         socket = null;
         chat_username = null;
+        currentLink = "";
 
         function Send(params) {
-            var connect = {type: "send", username: chat_username, message: params};
+            currentLink = params;
+            var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
             var text = JSON.stringify(connect)
             socket.send(text);
         }
 
 
         window.onload = () => {
-
             // da lahko kliknes enter za iskanje
             const searchQuery = document.getElementById("searchQuery");
             searchQuery.addEventListener("keyup", function (event) {
@@ -104,13 +90,17 @@ if (!isset($_SESSION['email'])) {
                     markupOnlineUsers(obj["data"]);
                 }
                 if (obj["type"] == "send") {
-                    createMessage(obj["message"], obj["username"]);
+                    createMessage(obj["message"], obj["sender"]);
                 }
             });
         }
 
         function createMessage(message, username) {
-            console.log(message, username);
+            if (username == undefined) {
+                username = currentUser;
+                message = currentLink;
+            }
+
             const userChat = document.getElementById("userChat");
 
             const sporocilo = document.createElement("div");
