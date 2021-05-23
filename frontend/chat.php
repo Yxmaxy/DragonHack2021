@@ -176,8 +176,7 @@ if (!isset($_SESSION['email'])) {
 
     </div>
     <div id="gifSearch">
-        <h3>GIFS with keyword</h3>
-        <h3>GIFS with keyword <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
+        <h3 style="display:flex; justify-content: space-between; align-items: center">GIFS with keyword <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
         <div id="gifList">
             <div id="gifList1"></div>
             <div id="gifList2"></div>
@@ -258,7 +257,7 @@ if (!isset($_SESSION['email'])) {
             </div>
             <div>
                 <button class="styledButton">OKE</button>
-                <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='none'">Cancel</button>
+                <button class="styledButton" onclick="cancelOwnGif(document.getElementById('makeOwnGifWrapper'))">Cancel</button>
             </div>
         </div>
     </div>

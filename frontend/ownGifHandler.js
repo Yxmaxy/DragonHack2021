@@ -17,3 +17,7 @@ function changeIsBold(value, which) {
 function changeColor(value, which) {
     document.getElementById(which + "Text").style.color = value;
 }
+
+function cancelOwnGif(element) {
+    element.style.display='none';
+}
