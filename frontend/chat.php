@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if(!$_SESSION['username'])
+{
+    header("Location: setUsername.php");
+}
+
 if (!isset($_SESSION['email'])) {
     session_unset();
     //header("Location: index.php");
@@ -55,23 +60,36 @@ if (!isset($_SESSION['email'])) {
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
             var text = JSON.stringify(connect)
             socket.send(text);
-            archiveChat(connect.sender, connect.sender, connect.message);
+            //archiveChat(connect.sender, connect.username, connect.message);
 
             const userChat = document.getElementById("userChat");
 
-            const sporocilo = document.createElement("div");
-            const ime = document.createElement("div");
-            const img = document.createElement("img");
-            ime.innerHTML = connect.sender;
-            img.src = connect.message;
-            img.onload = () => {
+            const sporocilo1 = document.createElement("div");
+            const sporocilo2 = document.createElement("div");
+            const ime1 = document.createElement("div");
+            const ime2 = document.createElement("div");
+            const img1 = document.createElement("img");
+            const img2 = document.createElement("img");
+            ime1.innerHTML = connect.sender;
+            ime2.innerHTML = connect.sender;
+            img1.src = connect.message;
+            img2.src = connect.message;
+            img1.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
             }
-            
-            sporocilo.appendChild(ime);
-            sporocilo.appendChild(img);
+            img2.onload = () => {
+                userChat.scrollTop = userChat.scrollHeight;
+            }
+            sporocilo1.appendChild(ime1);
+            sporocilo1.appendChild(img1);
 
-            userChat.appendChild(sporocilo);
+            sporocilo2.appendChild(ime2);
+            sporocilo2.appendChild(img2);
+
+            userChat.appendChild(sporocilo1);
+            chatArchive[connect.username].appendChild(sporocilo2);
+
+            console.log(chatArchive[connect.username],connect.username);
         }
 
 
@@ -136,7 +154,7 @@ if (!isset($_SESSION['email'])) {
         }
 
         function archiveChat(sender, reciever, message) {
-
+            console.log(sender, reciever)
             const sporocilo = document.createElement("div");
             const ime = document.createElement("div");
             const img = document.createElement("img");
@@ -150,12 +168,18 @@ if (!isset($_SESSION['email'])) {
             sporocilo.appendChild(img);
 
             chatArchive[sender].appendChild(sporocilo);
-            console.log(chatArchive[sender]);
+
+            console.log(chatArchive[sender],sender);
         }
 
         function selectChat(i) {
             var user = i["currentTarget"].innerText;
             chat_username = user;
+
+            const userChat = document.getElementById("userChat");
+            userChat.innerHTML = chatArchive[user].innerHTML;
+
+            console.log(chatArchive[user], user);
 
             document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
         }
