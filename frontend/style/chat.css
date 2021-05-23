@@ -31,7 +31,24 @@ main > div {
 #userChat {
     overflow: auto;
     margin-bottom: calc(3ch + 20px);
+    background-color: rgb(51, 64, 64);
 }
+
+#userChat > div {
+    margin: 15px;
+    border-radius: 25px;
+    background-color: rgb(47, 54, 54);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+#userChat > div > img {
+    width: 80%;
+    border-radius: 25px;
+}
+
 
 #chat {
     flex: 3;

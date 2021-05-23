@@ -61,7 +61,6 @@ if (!isset($_SESSION['email'])) {
             const sporocilo = document.createElement("div");
             const ime = document.createElement("div");
             const img = document.createElement("img");
-            img.style.width="100%";
             ime.innerHTML = connect.sender;
             img.src = connect.message;
             img.onload = () => {
