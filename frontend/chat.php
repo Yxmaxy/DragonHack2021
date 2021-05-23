@@ -108,14 +108,14 @@ if (!isset($_SESSION['email'])) {
             const img = document.createElement("img");
             ime.innerHTML = username;
             img.src = message;
+            img.onload = () => {
+                userChat.scrollTop = userChat.scrollHeight;
+            }
             
             sporocilo.appendChild(ime);
             sporocilo.appendChild(img);
 
             userChat.appendChild(sporocilo);
-
-            // ne sprašvat...
-            setTimeout(function(){ userChat.scrollTop = userChat.scrollHeight; }, 5);
         }
 
         function selectChat(i) {
