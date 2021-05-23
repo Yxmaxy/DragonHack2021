@@ -114,7 +114,8 @@ if (!isset($_SESSION['email'])) {
 
             userChat.appendChild(sporocilo);
 
-            userChat.scrollTop = userChat.scrollHeight;
+            // ne sprašvat...
+            setTimeout(function(){ userChat.scrollTop = userChat.scrollHeight; }, 5);
         }
 
         function selectChat(i) {
