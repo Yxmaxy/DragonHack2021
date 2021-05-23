@@ -43,7 +43,7 @@ img {
     margin: 10px;
     
     animation-name: zoneIn;
-    animation-duration: 2s;
+    animation-duration: 5s;
     animation-fill-mode: forwards;
 }
 
