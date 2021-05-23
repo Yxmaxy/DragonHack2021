@@ -85,7 +85,7 @@ if (!isset($_SESSION['email'])) {
 
             sporocilo2.appendChild(ime2);
             sporocilo2.appendChild(img2);
-
+            
             userChat.appendChild(sporocilo1);
             chatArchive[connect.username].appendChild(sporocilo2);
 
@@ -147,7 +147,9 @@ if (!isset($_SESSION['email'])) {
                 sporocilo.appendChild(ime);
                 sporocilo.appendChild(img);
 
-                userChat.appendChild(sporocilo);
+                if (sender == chat_username) {
+                    userChat.appendChild(sporocilo);
+                }
                 
                 archiveChat(sender, sender, message);
             }
@@ -178,6 +180,7 @@ if (!isset($_SESSION['email'])) {
 
             const userChat = document.getElementById("userChat");
             userChat.innerHTML = chatArchive[user].innerHTML;
+            userChat.scrollTop = userChat.scrollHeight;
 
             console.log(chatArchive[user], user);
 
