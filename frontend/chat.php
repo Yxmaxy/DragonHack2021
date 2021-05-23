@@ -137,8 +137,6 @@ if (!isset($_SESSION['email'])) {
 
         function archiveChat(sender, reciever, message) {
 
-            console.log(sender, reciever, message)
-            
             const sporocilo = document.createElement("div");
             const ime = document.createElement("div");
             const img = document.createElement("img");
@@ -152,7 +150,6 @@ if (!isset($_SESSION['email'])) {
             sporocilo.appendChild(img);
 
             chatArchive[sender].appendChild(sporocilo);
-
             console.log(chatArchive[sender]);
         }
 
