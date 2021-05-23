@@ -71,7 +71,7 @@ if (!isset($_SESSION['email'])) {
             return sporocilo;
         }
 
-        function drawWrappedGIF(connect, upperText, lowerText)
+        function drawWrappedGIF(connect)
         {
             const userChat = document.getElementById("userChat");
             
@@ -85,11 +85,11 @@ if (!isset($_SESSION['email'])) {
                 userChat.scrollTop = userChat.scrollHeight;
             }
             const upperTextDiv = document.createElement("div");
-            upperTextDiv.classList.add("upperText"); 
+            upperTextDiv.classList.add("upperText");
+            upperTextDiv.textContent = connect.upperText;
             const lowerTextDiv = document.createElement("div");
-            upperTextDiv.classList.add("lowerText");
-
-
+            lowerTextDiv.classList.add("lowerText");
+            lowerTextDiv.textContent = connect.lowerText;
 
             container.appendChild(ime);
             container.appendChild(img);
@@ -103,19 +103,23 @@ if (!isset($_SESSION['email'])) {
         function Send(params, upperText, lowerText) {
             currentLink = params;
             var connect = {type: "send", username: chat_username, message: params, sender: currentUser};
-            var text = JSON.stringify(connect)
-            socket.send(text);
+            
 
             if (upperText != undefined || lowerText != undefined) {
-                userChat.appendChild(drawWrappedGIF(connect, upperText, lowerText));
-                chatArchive[connect.username].appendChild(drawWrappedGIF(connect, upperText, lowerText));
+                connect = {type: "send", username: chat_username, message: params, sender: currentUser, upperText: upperText, lowerText, lowerText};
+                
+                var text = JSON.stringify(connect)
+                socket.send(text);
+                
+                userChat.appendChild(drawWrappedGIF(connect));
+                chatArchive[connect.username].appendChild(drawWrappedGIF(connect));
                 
             } else {
+                var text = JSON.stringify(connect)
+                socket.send(text);
                 userChat.appendChild(drawGIF(connect));
                 chatArchive[connect.username].appendChild(drawGIF(connect));
             }
-
-            
 
             console.log(chatArchive[connect.username],connect.username);
         }
@@ -133,7 +137,7 @@ if (!isset($_SESSION['email'])) {
             });
 
             // Create WebSocket connection.
-            socket = new WebSocket('ws://server.gifmessenger.online');
+            socket = new WebSocket('ws://192.168.0.19:81');
 
             // Connection opened
             socket.addEventListener('open', function (event) {
@@ -154,45 +158,46 @@ if (!isset($_SESSION['email'])) {
                     markupOnlineUsers(obj["data"]);
                 }
                 if (obj["type"] == "send") {
-                    createMessage(obj["message"], obj["sender"], obj["username"]);
-                    console.log("Pred zvokom");
-                    console.table(obj["status"]);
+                    createMessage(obj["message"], obj["sender"], obj["username"], obj["upperText"], obj["lowerText"]);
+                    //console.log("Pred zvokom");
+                    //console.table(obj["status"]);
                     if (obj["username"] == currentUser)
                     {
                         var audio = new Audio('alert.mp3');
                         audio.play();
                     }
-                    console.log("Po zvokom");
+                    //console.log("Po zvokom");
                 }
             });
         }
 
-        function createMessage(message, sender, reciever) {
+        function createMessage(message, sender, reciever, upperText, lowerText) {
             if (sender != undefined) {
-                const userChat = document.getElementById("userChat");
 
-                const sporocilo = document.createElement("div");
-                const ime = document.createElement("div");
-                const img = document.createElement("img");
-                ime.innerHTML = sender;
-                img.src = message;
-                img.onload = () => {
-                    userChat.scrollTop = userChat.scrollHeight;
-                }
                 
-                sporocilo.appendChild(ime);
-                sporocilo.appendChild(img);
 
-                if (sender == chat_username) {
-                    userChat.appendChild(sporocilo);
+                if (upperText != undefined || lowerText != undefined) {
+                    const connect = {username: reciever, message: message, sender: sender, upperText: upperText, lowerText: lowerText};
+                    const userChat = document.getElementById("userChat");
+
+                    if (sender == chat_username) {
+                        userChat.appendChild(drawWrappedGIF(connect));
+                    }
+                    chatArchive[connect.username].appendChild(drawWrappedGIF(connect));
                 }
-                
-                archiveChat(sender, sender, message);
+                else {
+                    const connect = {username: reciever, message: message, sender: sender};
+                    const userChat = document.getElementById("userChat");
+
+                    if (sender == chat_username) {
+                        userChat.appendChild(drawGIF(connect));
+                    }
+                    chatArchive[connect.username].appendChild(drawGIF(connect));
+                }
             }
         }
 
         function archiveChat(sender, reciever, message) {
-            console.log(sender, reciever)
             const sporocilo = document.createElement("div");
             const ime = document.createElement("div");
             const img = document.createElement("img");
@@ -258,10 +263,6 @@ if (!isset($_SESSION['email'])) {
             }
         }
 
-        function doggieSend() {
-            Send("https://media.tenor.com/images/d7afbeb5c3b3efc48a86eb2c3450ceb8/tenor.gif", document.getElementById("upperTextInput").value, document.getElementById("lowerTextInput").value)
-        }
-
     </script>
 </head>
 <body>
@@ -288,7 +289,7 @@ if (!isset($_SESSION['email'])) {
 
     </div>
     <div id="gifSearch">
-        <h3 style="display:flex; justify-content: space-between; align-items: center">GIFS with keyword <button class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
+        <h3 style="display:flex; justify-content: space-between; align-items: center">GIFS with keyword <button style="padding: 5px;" class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
         <div id="gifList">
             <div id="gifList1"></div>
             <div id="gifList2"></div>
@@ -328,12 +329,12 @@ if (!isset($_SESSION['email'])) {
         </div>
         <div class="imageContainer">
             <img src="https://media.tenor.com/images/d7afbeb5c3b3efc48a86eb2c3450ceb8/tenor.gif">
-            <div id="upperText"></div>
-            <div id="lowerText"></div>
+            <div id="upperTextID" class="upperText"></div>
+            <div id="lowerTextID" class="lowerText"></div>
         </div>
         <div>
             <button class="styledButton" onclick="doggieSend()">OKE</button>
-            <button class="styledButton" onclick="cancelOwnGif(document.getElementById('makeOwnGifWrapper'))">Cancel</button>
+            <button class="styledButton" onclick="resetDoggie()">Cancel</button>
         </div>
     </div>
 </div>

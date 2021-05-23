@@ -31,7 +31,7 @@ main > div {
 #userChat {
     overflow: auto;
     margin-bottom: calc(3ch + 20px);
-    background-color: rgb(51, 64, 64);
+    background-color: rgb(78, 97, 97);
 }
 
 #userChat > div {
@@ -49,6 +49,13 @@ main > div {
     border-radius: 25px;
 }
 
+#userChat > div.imageContainer {
+    width: 220px;
+}
+
+#userChat > div.imageContainer > img {
+    border-radius: 0px;
+}
 
 #chat {
     flex: 3;

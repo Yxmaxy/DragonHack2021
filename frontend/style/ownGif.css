@@ -4,7 +4,7 @@
     margin-bottom: 10px;
 }
 
-.imageContainer > div {
+.imageContainer > .upperText, .lowerText {
     position: absolute;
     width: 100%;
     word-wrap: break-word;
@@ -14,13 +14,27 @@
     color: black;
 }
 
-#upperText {
-    top: 0;
+.upperText {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+}
+
+.lowerText {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+}
+
+#upperTextID {
+    position: absolute;
+    top: 0px;
     left: 0;
 }
 
-#lowerText {
-    bottom: 4px;
+#lowerTextID {
+    position: absolute;
+    bottom: 5px;
     left: 0;
 }
 
