@@ -41,6 +41,10 @@ main {
 img {
     max-height: 20vh;
     margin: 10px;
+    
+    animation-name: zoneIn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes slide {
@@ -52,7 +56,11 @@ img {
     }
 }
 
-
-#gifs div {
-    transform: translateX(0);
+@keyframes zoneIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
 }
