@@ -51,10 +51,10 @@ if (!isset($_SESSION['email'])) {
                 var y = element[0].dims[1]
                 if (liha) {
                     //div[0].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
-                    div[0].innerHTML += "<img onclick='Send("+url+");' src=\"" + url + "\">"
+                    div[0].innerHTML += "<img onclick='Send(\""+url+"\");' src=\"" + url + "\">"
                 } else {
                     //div[1].innerHTML += "<img src=\"" + url + "\" width=\"" + x + "px\" height=\"" + y + "px\">"
-                    div[1].innerHTML += "<img onclick='Send("+url+");' src=\"" + url + "\">"
+                    div[1].innerHTML += "<img onclick='Send(\""+url+"\");' src=\"" + url + "\">"
                 }
 
             });
@@ -64,7 +64,7 @@ if (!isset($_SESSION['email'])) {
         chat_username = null;
 
         function Send(params) {
-            var connect = {type: "send", username: chat_username}
+            var connect = {type: "send", username: chat_username, message: params};
             var text = JSON.stringify(connect)
             socket.send(text);
         }
@@ -102,6 +102,9 @@ if (!isset($_SESSION['email'])) {
                 }
                 if (obj["type"] == "who online") {
                     markupOnlineUsers(obj["data"]);
+                }
+                if (obj["type"] == "send") {
+                    alert(obj["message"]);
                 }
             });
         }
