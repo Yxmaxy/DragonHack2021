@@ -26,14 +26,17 @@ if (!isset($_SESSION['email'])) {
     <script>
         const currentUser = <?php echo "\"" . $_SESSION["username"] . "\";"; ?>
         const chatArchive = {};
+        socket = null;
+        chat_username = null;
+        currentLink = "";
 
+        // used for drawing gifs that are on the right side
         function drawGifs(obj) {
             div = [document.getElementById("gifList1"), document.getElementById("gifList2")];
             div[0].innerHTML = "";
             div[1].innerHTML = "";
-            //alert("Dela");
-            //console.log("DrawGifs: " + obj);
             liha = false;
+
             obj.forEach(element => {
                 liha = !liha;
                 var url = element[0].url;
@@ -50,12 +53,7 @@ if (!isset($_SESSION['email'])) {
             });
         }
 
-        socket = null;
-        chat_username = null;
-        currentLink = "";
-
-        function drawGIF(connect)
-        {
+        function drawGIF(connect) {
             const userChat = document.getElementById("userChat");
             const sporocilo = document.createElement("div");
             const ime = document.createElement("div");
@@ -148,7 +146,6 @@ if (!isset($_SESSION['email'])) {
 
             // Listen for messages
             socket.addEventListener('message', function (event) {
-                //console.log('Message from server ', event.data);
                 var obj = JSON.parse(event.data);
                 if (obj["type"] == "request return") {
                     drawGifs(obj["data"]);
@@ -158,23 +155,16 @@ if (!isset($_SESSION['email'])) {
                 }
                 if (obj["type"] == "send") {
                     createMessage(obj["message"], obj["sender"], obj["username"], obj["upperText"], obj["lowerText"]);
-                    //console.log("Pred zvokom");
-                    //console.table(obj["status"]);
-                    if (obj["username"] == currentUser)
-                    {
+                    if (obj["username"] == currentUser) {
                         var audio = new Audio('alert.mp3');
                         audio.play();
                     }
-                    //console.log("Po zvokom");
                 }
             });
         }
 
         function createMessage(message, sender, reciever, upperText, lowerText) {
             if (sender != undefined) {
-
-                
-
                 if (upperText != undefined || lowerText != undefined) {
                     const connect = {username: reciever, message: message, sender: sender, upperText: upperText, lowerText: lowerText};
                     const userChat = document.getElementById("userChat");
@@ -182,7 +172,7 @@ if (!isset($_SESSION['email'])) {
                     if (sender == chat_username) {
                         userChat.appendChild(drawWrappedGIF(connect));
                     }
-                    chatArchive[connect.username].appendChild(drawWrappedGIF(connect));
+                    chatArchive[connect.sender].appendChild(drawWrappedGIF(connect));
                 }
                 else {
                     const connect = {username: reciever, message: message, sender: sender};
@@ -191,9 +181,11 @@ if (!isset($_SESSION['email'])) {
                     if (sender == chat_username) {
                         userChat.appendChild(drawGIF(connect));
                     }
-                    chatArchive[connect.username].appendChild(drawGIF(connect));
+                    chatArchive[connect.sender].appendChild(drawGIF(connect));
                 }
             }
+
+            console.log(chatArchive[sender],sender);
         }
 
         function archiveChat(sender, reciever, message) {
@@ -210,8 +202,6 @@ if (!isset($_SESSION['email'])) {
             sporocilo.appendChild(img);
 
             chatArchive[sender].appendChild(sporocilo);
-
-            console.log(chatArchive[sender],sender);
         }
 
         function selectChat(i) {
@@ -221,8 +211,6 @@ if (!isset($_SESSION['email'])) {
             const userChat = document.getElementById("userChat");
             userChat.innerHTML = chatArchive[user].innerHTML;
             userChat.scrollTop = userChat.scrollHeight;
-
-            console.log(chatArchive[user], user);
 
             document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
         }
