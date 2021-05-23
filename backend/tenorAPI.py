@@ -1,19 +1,17 @@
-# set the apikey and limit
 import json
 import requests
-import sys
 
-apikey = "H75LSQOFMAKG"  # Key za Tenor API
+apikey = "H75LSQOFMAKG"  # Key for Tenor API
 
-
+# This function searches for GIFS by specific keywords and returns specified number of GIFS and their metadata.
 def searchForGIFS(numOfGIFs, keywords):
     gifs = []
+
     for search_term in keywords:
         #print(search_term)
 
         # get the top noOfGIFs GIFs for the search term
-        r = requests.get(
-            "https://g.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (search_term, apikey, numOfGIFs))
+        r = requests.get("https://g.tenor.com/v1/search?q=%s&key=%s&limit=%s" % (search_term, apikey, numOfGIFs))
 
         if r.status_code == 200:
             # load the GIFs using the urls for the smaller GIF sizes
@@ -24,13 +22,4 @@ def searchForGIFS(numOfGIFs, keywords):
                 gifs.append([tinyGif, bigGif])
         else:
             top_gifs = None
-        # continue a similar pattern until the user makes a selection or starts a new search.
     return json.dumps(gifs)
-"""
-sys.argv = [2, "Cat"]
-if len(sys.argv) >= 2:
-    ret = searchForGIFS(sys.argv[0], sys.argv[1:])
-    print(ret)
-else:
-    print("Napačna raba API-ja.\nPravilna raba: tenorAPI numOfRequestedGifs keyword,...")
-"""
