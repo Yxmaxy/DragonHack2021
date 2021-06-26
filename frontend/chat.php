@@ -271,6 +271,12 @@ if (!isset($_SESSION['email'])) {
             include "./database/allUsers.php";
             ?>
         </div>
+        <div>
+            <h4>Add a friend</h4>
+            <?php
+            include "./database/addFriend.php";
+            ?>
+        </div>
     </div>
     <div id="chat">
         <h3 id="chattingWith">Please select a user from the list...</h3>

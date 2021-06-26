@@ -41,7 +41,8 @@ if (isset($_GET['code']))
     if ($user != false)
     {
         $_SESSION['email'] = $email;
-        $_SESSION['username'] = $user;
+        $_SESSION['username'] = $user[0];
+        $_SESSION['id'] = $user[1];
         $_SESSION['access_token'] = $access_token;
 		
 		//Preusmeri na chat
@@ -63,15 +64,16 @@ if (isset($_GET['code']))
 function UserExists($email)
 {
     include "db.php";
-    $sql = "SELECT UserName FROM `Users` WHERE Email='" . mysqli_real_escape_string($conn, $email) . "'";
+    $sql = "SELECT ID, UserName FROM `Users` WHERE Email='" . mysqli_real_escape_string($conn, $email) . "'";
     $result = $conn->query($sql);
-
+    $usr=array();
     if ($result->num_rows == 1)
     {
         while ($row = $result->fetch_assoc())
         {
 			//Dobi username
-            $username = $row['UserName'];
+            $usr[] = $row['UserName'];
+            $usr[] = $row['ID'];
         }
     }
     else
@@ -82,7 +84,7 @@ function UserExists($email)
     $conn->close();
 	
 	//Vrne username
-    return $username;
+    return $usr;
 }
 
 //Vstavi novega uporabnika
