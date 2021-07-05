@@ -1,15 +1,13 @@
 <?php
 if(isset($_POST['username']))
 {
-    //echo "1";
     $id=UserExists($_POST['username']);
+    
     if($id == $_SESSION['id'])
     {
-         echo "<script>alert('You can't add yourself 😂!');</script>";
+        echo "<script>alert('You can not add yourself 😂!');</script>";
     }
-    
-    
-    if($id==-1)
+    else if($id==-1)
     {
         echo "<script>alert('User does not exists!');</script>";
     }
@@ -17,15 +15,12 @@ if(isset($_POST['username']))
     {
        
         $friends = AreWeFriends($id);
-        //echo "__" .var_dump($friends). "__";
         if($friends==-3)
         {
-            //echo "nee";
             SendFriendRequest($id);
         }
         else
         {
-            //echo "ddd";
             $sporocilo="";
             switch ($friends)
             {
@@ -74,7 +69,7 @@ function AreWeFriends($id)
     
     $sql="SELECT `Accepted1`, `Accepted2`, IDuser1, IDuser2 FROM `Friends` WHERE (`IDuser1`='" . mysqli_real_escape_string($conn, $id) . "' AND IDuser2='" . mysqli_real_escape_string($conn, $_SESSION['id']) . "') OR 
     (`IDuser1`='" . mysqli_real_escape_string($conn, $_SESSION['id']) . "' AND IDuser2='" . mysqli_real_escape_string($conn, $id) . "')";
-    //echo $sql;
+ 
     $rez=-3;
     
     $result = $conn->query($sql);
