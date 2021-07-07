@@ -68,6 +68,11 @@ main > div {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    width: 50%;
+}
+
+#userChat > div.sentByUser {
+    float: right;
 }
 
 #userChat > div > img {

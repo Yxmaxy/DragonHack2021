@@ -61,7 +61,7 @@ if (!isset($_SESSION['email'])) {
         }
 
         // is used for drawing GIFs in the chat view
-        function drawGIF(connect) {
+        function drawGIF(connect, sentByUser) {
             const userChat = document.getElementById("userChat");
             const container = document.createElement("div");
             const ime = document.createElement("div");
@@ -71,6 +71,11 @@ if (!isset($_SESSION['email'])) {
             img.src = connect.message;
             img.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
+            }
+
+            // adds class so that chat is aligned right
+            if (sentByUser) {
+                container.classList.add("sentByUser");
             }
 
             container.appendChild(ime);
@@ -130,8 +135,8 @@ if (!isset($_SESSION['email'])) {
                 var text = JSON.stringify(connect)
                 socket.send(text);
 
-                userChat.appendChild(drawGIF(connect));
-                chatArchive[connect.username].appendChild(drawGIF(connect));
+                userChat.appendChild(drawGIF(connect, true));
+                chatArchive[connect.username].appendChild(drawGIF(connect, true));
             }
         }
 
@@ -202,9 +207,9 @@ if (!isset($_SESSION['email'])) {
 
                     // so we know if we can show the message directly (we are chatting with the user who sent the gif)
                     if (sender == chat_username) {
-                        userChat.appendChild(drawGIF(connect));
+                        userChat.appendChild(drawGIF(connect, false));
                     }
-                    chatArchive[connect.sender].appendChild(drawGIF(connect));
+                    chatArchive[connect.sender].appendChild(drawGIF(connect, false));
                 }
             }
         }
