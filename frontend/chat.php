@@ -24,6 +24,12 @@ if (!isset($_SESSION['email'])) {
 
     <script src="ownGifHandler.js"></script>
     <script>
+
+        // needed, so that on refresh the forms are not resubmitted
+        if (window.history.replaceState) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+
         const currentUser = <?php echo "\"" . $_SESSION["username"] . "\";"; ?>
         const chatArchive = {};
         socket = null;
@@ -266,20 +272,22 @@ if (!isset($_SESSION['email'])) {
 <main>
     <div id="users">
         <h3>Users</h3>
+        <div id="addAFriend">
+            <h4>Add a friend</h4>
+            <form action="" method="POST">
+                <input type="text" name="username" placeholder="Enter a username">
+                <button class="styledButton" type="submit">Add</button>
+            </form>
+        </div>
+        <h3 style="margin-bottom: 8px">Your friends</h3>
         <div id="usersList">
             <?php
             include "./database/allUsers.php";
             ?>
         </div>
-        <div>
-            <h4>Add a friend</h4>
-            <?php
-            include "./database/addFriend.php";
-            ?>
-        </div>
     </div>
     <div id="chat">
-        <h3 id="chattingWith">Please select a user from the list...</h3>
+        <h3 id="chattingWith">Logged in as: <?php echo $_SESSION["username"]; ?></h3>
         <div id="userChat"></div>
         <div id="searchBar">
             <input id="searchQuery" placeholder="Enter a keyword" disabled>
@@ -335,3 +343,8 @@ if (!isset($_SESSION['email'])) {
 </div>
 </body>
 </html>
+
+<?php
+// This is here, so that the whole look of the page loads before
+include "./database/addFriend.php";
+?>

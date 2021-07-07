@@ -12,3 +12,6 @@ backend/.idea/
 .idea/encodings.xml
 .idea/DragonHack2021.iml
 ~$Text.docx
+frontend/.htaccess
+frontend/database/redirect.php
+frontend/database/db.php

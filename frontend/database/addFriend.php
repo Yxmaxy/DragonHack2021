@@ -24,22 +24,15 @@ if(isset($_POST['username']))
             $sporocilo="";
             switch ($friends)
             {
-                case 0: $sporocilo="You are allready friend with " . $_POST['username'] . " 😉"; break;
+                case 0: $sporocilo="You are already friends with " . $_POST['username'] . " 😉"; break;
                 case -1: AddBack($id); break;
-                case 1: $sporocilo="Your friend did not added you back. 😔"; break;
-                default: $sporocilo="That was not suposed to happen."; break;
+                case 1: $sporocilo="Your friend did not add you back. 😔"; break;
+                default: $sporocilo="That was not supposed to happen. 😬"; break;
             }
             echo "<script>alert('" . $sporocilo . "');</script>";
         }
     }
 }
-?>
-<form action="" method="POST">
-    <input type="text" name="username" onfocus="this.value=''" value="username">
-    <input type="submit" value="Add!">
-</form>
-
-<?php
 
 function UserExists($user)
 {
