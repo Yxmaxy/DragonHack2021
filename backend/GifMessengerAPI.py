@@ -2,7 +2,7 @@ import json
 import ssl
 import tenorAPI
 from simple_websocket_server import WebSocketServer, WebSocket
-
+from datetime import datetime
 
 class SimpleChat(WebSocket):
 
@@ -55,7 +55,7 @@ class SimpleChat(WebSocket):
     # Function connected is executed when a new user connects to the server (comes online). Socket that is used for
     # communication with this specific user get a temporary unique name, which is later changed to users username.
     def connected(self):
-        print(self.address, 'connected')
+        print(datetime.now().strftime("%b %d %Y %H:%M:%S"), self.address, 'connected')
         clients[str(self)] = self
 
     # Function handle_close is executed when a user disconnects from server. He/She is removed from list of online
@@ -67,7 +67,7 @@ class SimpleChat(WebSocket):
                 clients.pop(client_key)
                 break
 
-        print(self.address, 'closed')
+        print(datetime.now().strftime("%b %d %Y %H:%M:%S"), self.address, 'closed')
         # Send list of online userst to all online users
         for client_name, client_sock in clients.items():
             clients_usernames = [x for x in clients.keys()]
@@ -78,6 +78,6 @@ class SimpleChat(WebSocket):
 clients = dict()
 
 # WebSocketServer is set up and left running. Accepting and ending connections is done automatically.
-#server = WebSocketServer('', 81, SimpleChat, "public.pem", "private.pem", ssl.PROTOCOL_TLSv1_2)
-server = WebSocketServer('', 81, SimpleChat)
+server = WebSocketServer('83.212.126.136', 80, SimpleChat, "public.pem", "private.pem", ssl.PROTOCOL_TLSv1_2)
+#server = WebSocketServer('83.212.126.136', 80, SimpleChat)
 server.serve_forever()
