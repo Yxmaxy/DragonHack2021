@@ -231,6 +231,11 @@ if (!isset($_SESSION['email'])) {
             document.getElementById("chattingWith").innerHTML = "Chatting with: " + chat_username;
             document.getElementById("searchQuery").disabled = false;
             document.getElementById("searchButton").disabled = false;
+
+            // if user is on mobile and selects, the menu closes
+            if (menuOpen) {
+                menuClick();
+            }
         }
 
         // for gifs in preview
@@ -307,7 +312,7 @@ if (!isset($_SESSION['email'])) {
 
     </div>
     <div id="gifSearch">
-        <h3 style="display:flex; justify-content: space-between; align-items: center">GIFS with keyword <button style="padding: 5px;" class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
+        <h3>GIFS with keyword <button style="padding: 5px;" class="styledButton" onclick="document.getElementById('makeOwnGifWrapper').style.display='flex'">Make caption 🖊</button></h3>
         <div id="gifList">
             <div id="gifList1"></div>
             <div id="gifList2"></div>

@@ -7,9 +7,26 @@
 @media only screen and (max-width: 600px) {
     #users {
         display: none;
+        z-index: 1;
     }
 
     #gifSearch {
+        position: fixed;
+        height: 20vh;
+        width: 100%;
+        bottom: calc(15px + 2 * 5px + 2 * 2px + 2 * 10px);
+        background-color: rgba(51, 64, 64, 0.7);
+    }
+
+    #gifSearch h3 {
         display: none;
+    }
+
+    #gifList > div {
+        flex-direction: row;
+    }
+
+    #gifList > div > img {
+        height: 100%;
     }
 }
