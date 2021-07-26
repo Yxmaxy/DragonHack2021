@@ -10,6 +10,8 @@ main {
     flex-grow: 1;
 
     overflow: auto;
+
+    position: relative;
 }
 
 main > div {

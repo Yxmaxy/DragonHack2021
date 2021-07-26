@@ -1,0 +1,15 @@
+#users > a {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    #users {
+        display: none;
+    }
+
+    #gifSearch {
+        display: none;
+    }
+}

@@ -20,9 +20,11 @@ if (!isset($_SESSION['email'])) {
     <title>Gif Messenger</title>
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/chat.css">
+    <link rel="stylesheet" href="style/chatMobile.css">
     <link rel="stylesheet" href="style/ownGif.css">
 
     <script src="ownGifHandler.js"></script>
+    <script src="mobile.js"></script>
     <script>
 
         // needed, so that on refresh the forms are not resubmitted
@@ -185,6 +187,9 @@ if (!isset($_SESSION['email'])) {
                     }
                 }
             });
+
+            // Check if website is mobile
+            handleMobile();
         }
 
         function createMessage(message, sender, reciever, upperText, lowerText) {
@@ -276,6 +281,7 @@ if (!isset($_SESSION['email'])) {
 </header>
 <main>
     <div id="users">
+        <a style ="display: none;" class="styledButton" href="./database/logout.php">Log out</a>
         <h3>Users</h3>
         <div id="addAFriend">
             <h4>Add a friend</h4>

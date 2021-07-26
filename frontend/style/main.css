@@ -43,7 +43,7 @@ main {
     color: whitesmoke;
     font-size: clamp(0.5rem, 10vw, 1rem);
     background-color: orange;
-    padding: 13px 10px 10px 10px;
+    padding: min(2vw, 13px) min(1.8vw, 10px) min(1.8vw, 10px) min(1.8vw, 10px);
     margin-right: 10px;
     border-radius: 10px;
     border: none;
