@@ -27,6 +27,11 @@
     }
 
     #gifList > div > img {
-        height: 100%;
+        height: calc(100% - 10px);
+        width: unset;
+    }
+
+    #userChat {
+        margin-bottom: calc(3ch + 20px + 20vh);
     }
 }
