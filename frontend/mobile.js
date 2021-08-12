@@ -13,6 +13,9 @@ function handleMobile() {
         menuButton.innerText = "Menu";
         menuButton.href = "javascript:menuClick();";
         usersHeader.style.display = "none";
+
+        // Fix for annoying web 100vh problem
+        document.body.style.height = window.innerHeight + "px";
     }
     // Not in mobile
     else {
