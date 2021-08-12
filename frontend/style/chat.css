@@ -74,7 +74,7 @@ main > div {
 }
 
 #userChat > div.sentByUser {
-    float: right;
+    margin-left: auto;
 }
 
 #userChat > div > img {

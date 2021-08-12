@@ -87,7 +87,7 @@ if (!isset($_SESSION['email'])) {
         }
 
         // the same as above, except used for gifs with custom text
-        function drawWrappedGIF(connect) {
+        function drawWrappedGIF(connect, sentByUser) {
             const userChat = document.getElementById("userChat");
             
             const container = document.createElement("div");
@@ -99,6 +99,11 @@ if (!isset($_SESSION['email'])) {
             img.src = connect.message;
             img.onload = () => {
                 userChat.scrollTop = userChat.scrollHeight;
+            }
+
+            // adds class so that chat is aligned right
+            if (sentByUser) {
+                container.classList.add("sentByUser");
             }
 
             const upperTextDiv = document.createElement("div");
@@ -129,8 +134,8 @@ if (!isset($_SESSION['email'])) {
                 var text = JSON.stringify(connect)
                 socket.send(text);
                 
-                userChat.appendChild(drawWrappedGIF(connect));
-                chatArchive[connect.username].appendChild(drawWrappedGIF(connect));
+                userChat.appendChild(drawWrappedGIF(connect, true));
+                chatArchive[connect.username].appendChild(drawWrappedGIF(connect, true));
                 
             } else {
                 // data is sent via socket
@@ -202,9 +207,9 @@ if (!isset($_SESSION['email'])) {
 
                     // so we know if we can show the message directly (we are chatting with the user who sent the gif)
                     if (sender == chat_username) {
-                        userChat.appendChild(drawWrappedGIF(connect));
+                        userChat.appendChild(drawWrappedGIF(connect, false));
                     }
-                    chatArchive[connect.sender].appendChild(drawWrappedGIF(connect));
+                    chatArchive[connect.sender].appendChild(drawWrappedGIF(connect, false));
                 }
                 else {
                     const connect = {username: reciever, message: message, sender: sender};
