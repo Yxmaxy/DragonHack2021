@@ -1,5 +1,6 @@
 import json
 import requests
+import random
 
 apikey = "H75LSQOFMAKG"  # Key for Tenor API
 
@@ -26,4 +27,5 @@ def searchForGIFS(numOfGIFs, keywords):
         else:
             top_gifs = None
     # Return requested GIFs in JSON format.
+    random.shuffle(gifs)
     return json.dumps(gifs)
