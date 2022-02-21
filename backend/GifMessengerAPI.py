@@ -78,6 +78,6 @@ class SimpleChat(WebSocket):
 clients = dict()
 
 # WebSocketServer is set up and left running. Accepting and ending connections is done automatically.
-server = WebSocketServer('83.212.126.136', 80, SimpleChat, "public.pem", "private.pem", ssl.PROTOCOL_TLSv1_2)
-#server = WebSocketServer('83.212.126.136', 80, SimpleChat)
+#server = WebSocketServer('83.212.82.234', 443, SimpleChat, "public.pem", "private.pem", ssl.PROTOCOL_TLSv1_2)
+server = WebSocketServer('83.212.82.220', 80, SimpleChat)
 server.serve_forever()
